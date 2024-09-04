@@ -75,8 +75,8 @@ public class GameDesktopLauncher implements ApplicationListener {
         // get time passed since the last render
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
-            if (isEqual(tank.getPlayerMovementProgress(), 1f)) {
+        if ((isEqual(tank.getPlayerMovementProgress(), 1f))) {
+            if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
                 // check potential player destination for collision with obstacles
                 if (!tree.getTreeObstacleCoordinates().equals(incrementedY(tank.getPlayerCoordinates()))) {
                     tank.addPlayerDestinationCoordinates(1, false);
@@ -84,27 +84,21 @@ public class GameDesktopLauncher implements ApplicationListener {
                 }
                 tank.setPlayerRotation(90f);
             }
-        }
-        if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
-            if (isEqual(tank.getPlayerMovementProgress(), 1f)) {
+            if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
                 if (!tree.getTreeObstacleCoordinates().equals(decrementedX(tank.getPlayerCoordinates()))) {
                     tank.addPlayerDestinationCoordinates(-1, true);
                     tank.setPlayerMovementProgress(0f);
                 }
                 tank.setPlayerRotation(-180f);
             }
-        }
-        if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
-            if (isEqual(tank.getPlayerMovementProgress(), 1f)) {
+            if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
                 if (!tree.getTreeObstacleCoordinates().equals(decrementedY(tank.getPlayerCoordinates()))) {
                     tank.addPlayerDestinationCoordinates(-1, false);
                     tank.setPlayerMovementProgress(0f);
                 }
                 tank.setPlayerRotation(-90f);
             }
-        }
-        if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
-            if (isEqual(tank.getPlayerMovementProgress(), 1f)) {
+            if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
                 if (!tree.getTreeObstacleCoordinates().equals(incrementedX(tank.getPlayerCoordinates()))) {
                     tank.addPlayerDestinationCoordinates(1, true);
                     tank.setPlayerMovementProgress(0f);
