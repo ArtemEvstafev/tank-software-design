@@ -75,45 +75,45 @@ public class GameDesktopLauncher implements ApplicationListener {
         // get time passed since the last render
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        if ((isEqual(tank.getPlayerMovementProgress(), 1f))) {
+        if ((isEqual(tank.getMovementProgress(), 1f))) {
             if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
                 // check potential player destination for collision with obstacles
-                if (!tree.getTreeObstacleCoordinates().equals(incrementedY(tank.getPlayerCoordinates()))) {
+                if (!tree.getCoordinates().equals(incrementedY(tank.getCoordinates()))) {
                     tank.addPlayerDestinationCoordinates(1, false);
-                    tank.setPlayerMovementProgress(0f);
+                    tank.setMovementProgress(0f);
                 }
-                tank.setPlayerRotation(90f);
+                tank.setRotation(90f);
             }
             if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
-                if (!tree.getTreeObstacleCoordinates().equals(decrementedX(tank.getPlayerCoordinates()))) {
+                if (!tree.getCoordinates().equals(decrementedX(tank.getCoordinates()))) {
                     tank.addPlayerDestinationCoordinates(-1, true);
-                    tank.setPlayerMovementProgress(0f);
+                    tank.setMovementProgress(0f);
                 }
-                tank.setPlayerRotation(-180f);
+                tank.setRotation(-180f);
             }
             if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
-                if (!tree.getTreeObstacleCoordinates().equals(decrementedY(tank.getPlayerCoordinates()))) {
+                if (!tree.getCoordinates().equals(decrementedY(tank.getCoordinates()))) {
                     tank.addPlayerDestinationCoordinates(-1, false);
-                    tank.setPlayerMovementProgress(0f);
+                    tank.setMovementProgress(0f);
                 }
-                tank.setPlayerRotation(-90f);
+                tank.setRotation(-90f);
             }
             if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
-                if (!tree.getTreeObstacleCoordinates().equals(incrementedX(tank.getPlayerCoordinates()))) {
+                if (!tree.getCoordinates().equals(incrementedX(tank.getCoordinates()))) {
                     tank.addPlayerDestinationCoordinates(1, true);
-                    tank.setPlayerMovementProgress(0f);
+                    tank.setMovementProgress(0f);
                 }
-                tank.setPlayerRotation(0f);
+                tank.setRotation(0f);
             }
         }
 
         // calculate interpolated player screen coordinates
-        tileMovement.moveRectangleBetweenTileCenters(tank.getPlayerRectangle(), tank.getPlayerCoordinates(), tank.getPlayerDestinationCoordinates(), tank.getPlayerMovementProgress());
+        tileMovement.moveRectangleBetweenTileCenters(tank.getRectangle(), tank.getCoordinates(), tank.getDestinationCoordinates(), tank.getMovementProgress());
 
-        tank.setPlayerMovementProgress(continueProgress(tank.getPlayerMovementProgress(), deltaTime, tank.getMOVEMENT_SPEED()));
-        if (isEqual(tank.getPlayerMovementProgress(), 1f)) {
+        tank.setMovementProgress(continueProgress(tank.getMovementProgress(), deltaTime, tank.getMOVEMENT_SPEED()));
+        if (isEqual(tank.getMovementProgress(), 1f)) {
             // record that the player has reached his/her destination
-            tank.setPlayerCoordinates(tank.getPlayerDestinationCoordinates());
+            tank.setCoordinates(tank.getDestinationCoordinates());
         }
 
         // render each tile of the level
@@ -123,10 +123,10 @@ public class GameDesktopLauncher implements ApplicationListener {
         batch.begin();
 
         // render player
-        drawTextureRegionUnscaled(batch, tank.getPlayerGraphics(), tank.getPlayerRectangle(), tank.getPlayerRotation());
+        drawTextureRegionUnscaled(batch, tank.getGraphics(), tank.getRectangle(), tank.getRotation());
 
         // render tree obstacle
-        drawTextureRegionUnscaled(batch, tree.getTreeObstacleGraphics(), tree.getTreeObstacleRectangle(), 0f);
+        drawTextureRegionUnscaled(batch, tree.getGraphics(), tree.getRectangle(), 0f);
 
         // submit all drawing requests
         batch.end();

@@ -11,10 +11,10 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.moveRectangleAtTileCenter
 
 public class Tree {
 
-    private final Texture greenTreeTexture;
-    private final TextureRegion treeObstacleGraphics;
-    private final GridPoint2 treeObstacleCoordinates;
-    private final Rectangle treeObstacleRectangle;
+    private final Texture texture;
+    private final TextureRegion graphics;
+    private final GridPoint2 coordinates;
+    private final Rectangle rectangle;
 
     public Tree
             (
@@ -22,31 +22,31 @@ public class Tree {
                     GridPoint2 treeObstacleCoordinates
             )
     {
-        this.greenTreeTexture = greenTreeTexture;
-        this.treeObstacleGraphics = new TextureRegion(greenTreeTexture);
-        this.treeObstacleCoordinates = treeObstacleCoordinates;
-        this.treeObstacleRectangle = createBoundingRectangle(treeObstacleGraphics);
+        this.texture = greenTreeTexture;
+        this.graphics = new TextureRegion(greenTreeTexture);
+        this.coordinates = treeObstacleCoordinates;
+        this.rectangle = createBoundingRectangle(graphics);
 
     }
 
     public void moveTreeAtTileCenter(TiledMapTileLayer groundLayer) {
-        moveRectangleAtTileCenter(groundLayer, treeObstacleRectangle, treeObstacleCoordinates);
+        moveRectangleAtTileCenter(groundLayer, rectangle, coordinates);
     }
 
-    public GridPoint2 getTreeObstacleCoordinates() {
-        return treeObstacleCoordinates;
+    public GridPoint2 getCoordinates() {
+        return coordinates;
     }
 
-    public Rectangle getTreeObstacleRectangle() {
-        return treeObstacleRectangle;
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
-    public TextureRegion getTreeObstacleGraphics() {
-        return treeObstacleGraphics;
+    public TextureRegion getGraphics() {
+        return graphics;
     }
 
     public void disposeTexture() {
-        greenTreeTexture.dispose();
+        texture.dispose();
     }
 
 }

@@ -12,16 +12,16 @@ public class Tank {
 
     private final float MOVEMENT_SPEED;
     // Texture decodes an image file and loads it into GPU memory, it represents a native resource
-    private final Texture blueTankTexture;
+    private final Texture texture;
     // TextureRegion represents Texture portion, there may be many TextureRegion instances of the same Texture
-    private final TextureRegion playerGraphics;
-    private final Rectangle playerRectangle;
+    private final TextureRegion graphics;
+    private final Rectangle rectangle;
     // player current position coordinates on level 10x8 grid (e.g. x=0, y=1)
-    private final GridPoint2 playerCoordinates;
+    private final GridPoint2 coordinates;
     // which tile the player want to go next
-    private final GridPoint2 playerDestinationCoordinates;
-    private float playerMovementProgress;
-    private float playerRotation;
+    private final GridPoint2 destinationCoordinates;
+    private float movementProgress;
+    private float rotation;
 
     public Tank
             (
@@ -33,13 +33,13 @@ public class Tank {
             )
     {
         this.MOVEMENT_SPEED = speed;
-        this.blueTankTexture = blueTankTexture;
-        this.playerGraphics = new TextureRegion(blueTankTexture);
-        this.playerRectangle = createBoundingRectangle(playerGraphics);
-        this.playerDestinationCoordinates = playerDestinationCoordinates;
-        this.playerCoordinates = new GridPoint2(playerDestinationCoordinates);
-        this.playerMovementProgress = playerMovementProgress;
-        this.playerRotation = playerRotation;
+        this.texture = blueTankTexture;
+        this.graphics = new TextureRegion(blueTankTexture);
+        this.rectangle = createBoundingRectangle(graphics);
+        this.destinationCoordinates = playerDestinationCoordinates;
+        this.coordinates = new GridPoint2(playerDestinationCoordinates);
+        this.movementProgress = playerMovementProgress;
+        this.rotation = playerRotation;
 
     }
 
@@ -47,53 +47,53 @@ public class Tank {
         return MOVEMENT_SPEED;
     }
 
-    public Rectangle getPlayerRectangle() {
-        return playerRectangle;
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
-    public TextureRegion getPlayerGraphics() {
-        return playerGraphics;
+    public TextureRegion getGraphics() {
+        return graphics;
     }
 
-    public GridPoint2 getPlayerCoordinates() {
-        return playerCoordinates;
+    public GridPoint2 getCoordinates() {
+        return coordinates;
     }
 
-    public void setPlayerCoordinates(GridPoint2 playerCoordinates) {
-        this.playerCoordinates.set(playerCoordinates);
+    public void setCoordinates(GridPoint2 coordinates) {
+        this.coordinates.set(coordinates);
     }
 
-    public GridPoint2 getPlayerDestinationCoordinates() {
-        return playerDestinationCoordinates;
+    public GridPoint2 getDestinationCoordinates() {
+        return destinationCoordinates;
     }
 
     public void disposeTexture() {
-        blueTankTexture.dispose();
+        texture.dispose();
     }
 
-    public float getPlayerMovementProgress() {
-        return playerMovementProgress;
+    public float getMovementProgress() {
+        return movementProgress;
     }
 
-    public void setPlayerMovementProgress(float playerMovementProgress) {
-        this.playerMovementProgress = playerMovementProgress;
+    public void setMovementProgress(float movementProgress) {
+        this.movementProgress = movementProgress;
     }
 
-    public float getPlayerRotation() {
-        return playerRotation;
+    public float getRotation() {
+        return rotation;
     }
 
-    public void setPlayerRotation(float playerRotation) {
-        this.playerRotation = playerRotation;
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
     }
 
     public void addPlayerDestinationCoordinates(int number, boolean toX) {
 
         if (toX) {
-            playerDestinationCoordinates.x += number;
+            destinationCoordinates.x += number;
         }
         else {
-            playerDestinationCoordinates.y += number;
+            destinationCoordinates.y += number;
         }
     }
 }
