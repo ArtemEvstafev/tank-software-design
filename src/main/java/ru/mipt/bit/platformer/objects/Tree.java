@@ -58,7 +58,7 @@ public class Tree implements Drawable, Object {
     }
 
     @Override
-    public void disposeTexture() {
+    public void dispose() {
         texture.dispose();
     }
 

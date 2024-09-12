@@ -8,8 +8,8 @@ public interface Drawable {
     Texture getTexture();
     TextureRegion getGraphics();
     Rectangle getRectangle();
-    void disposeTexture();
+    void dispose();
     default float getRotation(){
         return 0.f;
-    };
+    }
 }

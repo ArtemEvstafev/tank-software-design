@@ -26,20 +26,20 @@ public class Tank implements Drawable, Movable {
     public Tank
             (
                     Texture texture,
-                    GridPoint2 playerDestinationCoordinates,
+                    GridPoint2 destinationCoordinates,
                     float speed,
-                    float playerMovementProgress,
-                    float playerRotation
+                    float movementProgress,
+                    float rotation
             )
     {
         this.movementSpeed = speed;
         this.texture = texture;
         this.graphics = new TextureRegion(texture);
         this.rectangle = createBoundingRectangle(graphics);
-        this.destinationCoordinates = playerDestinationCoordinates;
-        this.coordinates = new GridPoint2(playerDestinationCoordinates);
-        this.movementProgress = playerMovementProgress;
-        this.rotation = playerRotation;
+        this.destinationCoordinates = destinationCoordinates;
+        this.coordinates = new GridPoint2(destinationCoordinates);
+        this.movementProgress = movementProgress;
+        this.rotation = rotation;
 
     }
 
@@ -64,7 +64,7 @@ public class Tank implements Drawable, Movable {
     }
 
     @Override
-    public void disposeTexture() {
+    public void dispose() {
         texture.dispose();
     }
 

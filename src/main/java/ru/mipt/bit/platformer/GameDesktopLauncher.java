@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 
+import ru.mipt.bit.platformer.util.Batcher;
 import ru.mipt.bit.platformer.util.TileMovement;
 import ru.mipt.bit.platformer.objects.*;
 
@@ -26,7 +26,7 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class GameDesktopLauncher implements ApplicationListener {
 
-    private Batch batch;
+    private Batcher batcher;
 
     private TiledMap level;
     private MapRenderer levelRenderer;
@@ -37,11 +37,11 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
+        batcher = new Batcher(new SpriteBatch());
 
         // load level tiles
         level = new TmxMapLoader().load("level.tmx");
-        levelRenderer = createSingleLayerMapRenderer(level, batch);
+        levelRenderer = createSingleLayerMapRenderer(level, batcher.getBatch());
         TiledMapTileLayer groundLayer = getSingleLayer(level);
         tileMovement = new TileMovement(groundLayer, Interpolation.smooth);
 
@@ -117,17 +117,8 @@ public class GameDesktopLauncher implements ApplicationListener {
         // render each tile of the level
         levelRenderer.render();
 
-        // start recording all drawing commands
-        batch.begin();
+        batcher.draw(tank, tree);
 
-        // render player
-        drawTextureRegionUnscaled(batch, tank.getGraphics(), tank.getRectangle(), tank.getRotation());
-
-        // render tree obstacle
-        drawTextureRegionUnscaled(batch, tree.getGraphics(), tree.getRectangle(), tree.getRotation());
-
-        // submit all drawing requests
-        batch.end();
     }
 
     @Override
@@ -148,10 +139,10 @@ public class GameDesktopLauncher implements ApplicationListener {
     @Override
     public void dispose() {
         // dispose of all the native resources (classes which implement com.badlogic.gdx.utils.Disposable)
-        tree.disposeTexture();
-        tank.disposeTexture();
+        tree.dispose();
+        tank.dispose();
         level.dispose();
-        batch.dispose();
+        batcher.dispose();
     }
 
     public static void main(String[] args) {
