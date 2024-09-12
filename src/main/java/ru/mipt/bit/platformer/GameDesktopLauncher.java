@@ -26,8 +26,6 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class GameDesktopLauncher implements ApplicationListener {
 
-//    private static final float MOVEMENT_SPEED = 0.4f;
-
     private Batch batch;
 
     private TiledMap level;
@@ -79,28 +77,28 @@ public class GameDesktopLauncher implements ApplicationListener {
             if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
                 // check potential player destination for collision with obstacles
                 if (!tree.getCoordinates().equals(incrementedY(tank.getCoordinates()))) {
-                    tank.addPlayerDestinationCoordinates(1, false);
+                    tank.changeDestinationCoordinates(1, false);
                     tank.setMovementProgress(0f);
                 }
                 tank.setRotation(90f);
             }
             if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
                 if (!tree.getCoordinates().equals(decrementedX(tank.getCoordinates()))) {
-                    tank.addPlayerDestinationCoordinates(-1, true);
+                    tank.changeDestinationCoordinates(-1, true);
                     tank.setMovementProgress(0f);
                 }
                 tank.setRotation(-180f);
             }
             if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
                 if (!tree.getCoordinates().equals(decrementedY(tank.getCoordinates()))) {
-                    tank.addPlayerDestinationCoordinates(-1, false);
+                    tank.changeDestinationCoordinates(-1, false);
                     tank.setMovementProgress(0f);
                 }
                 tank.setRotation(-90f);
             }
             if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
                 if (!tree.getCoordinates().equals(incrementedX(tank.getCoordinates()))) {
-                    tank.addPlayerDestinationCoordinates(1, true);
+                    tank.changeDestinationCoordinates(1, true);
                     tank.setMovementProgress(0f);
                 }
                 tank.setRotation(0f);
@@ -110,7 +108,7 @@ public class GameDesktopLauncher implements ApplicationListener {
         // calculate interpolated player screen coordinates
         tileMovement.moveRectangleBetweenTileCenters(tank.getRectangle(), tank.getCoordinates(), tank.getDestinationCoordinates(), tank.getMovementProgress());
 
-        tank.setMovementProgress(continueProgress(tank.getMovementProgress(), deltaTime, tank.getMOVEMENT_SPEED()));
+        tank.setMovementProgress(continueProgress(tank.getMovementProgress(), deltaTime, tank.getMovementSpeed()));
         if (isEqual(tank.getMovementProgress(), 1f)) {
             // record that the player has reached his/her destination
             tank.setCoordinates(tank.getDestinationCoordinates());
@@ -126,7 +124,7 @@ public class GameDesktopLauncher implements ApplicationListener {
         drawTextureRegionUnscaled(batch, tank.getGraphics(), tank.getRectangle(), tank.getRotation());
 
         // render tree obstacle
-        drawTextureRegionUnscaled(batch, tree.getGraphics(), tree.getRectangle(), 0f);
+        drawTextureRegionUnscaled(batch, tree.getGraphics(), tree.getRectangle(), tree.getRotation());
 
         // submit all drawing requests
         batch.end();

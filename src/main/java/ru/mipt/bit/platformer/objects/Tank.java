@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
-public class Tank {
+public class Tank implements Drawable, Movable {
 
-    private final float MOVEMENT_SPEED;
+    private final float movementSpeed;
     // Texture decodes an image file and loads it into GPU memory, it represents a native resource
     private final Texture texture;
     // TextureRegion represents Texture portion, there may be many TextureRegion instances of the same Texture
@@ -25,16 +25,16 @@ public class Tank {
 
     public Tank
             (
-                    Texture blueTankTexture,
+                    Texture texture,
                     GridPoint2 playerDestinationCoordinates,
                     float speed,
                     float playerMovementProgress,
                     float playerRotation
             )
     {
-        this.MOVEMENT_SPEED = speed;
-        this.texture = blueTankTexture;
-        this.graphics = new TextureRegion(blueTankTexture);
+        this.movementSpeed = speed;
+        this.texture = texture;
+        this.graphics = new TextureRegion(texture);
         this.rectangle = createBoundingRectangle(graphics);
         this.destinationCoordinates = playerDestinationCoordinates;
         this.coordinates = new GridPoint2(playerDestinationCoordinates);
@@ -43,51 +43,67 @@ public class Tank {
 
     }
 
-    public float getMOVEMENT_SPEED() {
-        return MOVEMENT_SPEED;
+    @Override
+    public float getMovementSpeed() {
+        return movementSpeed;
     }
 
-    public Rectangle getRectangle() {
-        return rectangle;
+    @Override
+    public Texture getTexture() {
+        return texture;
     }
 
+    @Override
     public TextureRegion getGraphics() {
         return graphics;
     }
 
-    public GridPoint2 getCoordinates() {
-        return coordinates;
+    @Override
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
-    public void setCoordinates(GridPoint2 coordinates) {
-        this.coordinates.set(coordinates);
-    }
-
-    public GridPoint2 getDestinationCoordinates() {
-        return destinationCoordinates;
-    }
-
+    @Override
     public void disposeTexture() {
         texture.dispose();
     }
 
+    @Override
+    public GridPoint2 getCoordinates() {
+        return coordinates;
+    }
+
+    @Override
+    public void setCoordinates(GridPoint2 coordinates) {
+        this.coordinates.set(coordinates);
+    }
+
+    @Override
+    public GridPoint2 getDestinationCoordinates() {
+        return destinationCoordinates;
+    }
+
+    @Override
     public float getMovementProgress() {
         return movementProgress;
     }
 
+    @Override
     public void setMovementProgress(float movementProgress) {
         this.movementProgress = movementProgress;
     }
 
+    @Override
     public float getRotation() {
         return rotation;
     }
 
+    @Override
     public void setRotation(float rotation) {
         this.rotation = rotation;
     }
 
-    public void addPlayerDestinationCoordinates(int number, boolean toX) {
+    public void changeDestinationCoordinates(int number, boolean toX) {
 
         if (toX) {
             destinationCoordinates.x += number;
