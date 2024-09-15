@@ -6,6 +6,8 @@ import ru.mipt.bit.platformer.objects.Object;
 
 import java.util.Arrays;
 
+import static com.badlogic.gdx.math.MathUtils.isEqual;
+
 public abstract class MovementKey implements Key {
 
     protected final Object[] obstacles;
@@ -30,7 +32,7 @@ public abstract class MovementKey implements Key {
     @Override
     public void action() {
         for (Movable movable : movables) {
-            if (!existCollisions(movable)) {
+            if ((isEqual(movable.getMovementProgress(), 1f)) && !existCollisions(movable)) {
                 movable.changeDestinationCoordinates(dir.getDirection());
                 movable.setRotation(dir.getRotation());
                 movable.setMovementProgress(0f);

@@ -28,7 +28,7 @@ public class Tree implements Drawable, Object {
         this.rectangle = createBoundingRectangle(graphics);
     }
 
-    public void moveTreeAtTileCenter(TiledMapTileLayer groundLayer) {
+    public void placeOnLayer(TiledMapTileLayer groundLayer) {
         moveRectangleAtTileCenter(groundLayer, rectangle, coordinates);
     }
 

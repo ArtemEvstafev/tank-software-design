@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.util.TileMovement;
 
 
+import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class Tank implements Drawable, Movable {
@@ -107,5 +109,14 @@ public class Tank implements Drawable, Movable {
     public void changeDestinationCoordinates(GridPoint2 direction) {
         destinationCoordinates.x += direction.x;
         destinationCoordinates.y += direction.y;
+    }
+
+    @Override
+    public void move(float deltaTime, TileMovement tileMovement) {
+        tileMovement.moveRectangleBetweenTileCenters(rectangle, coordinates, destinationCoordinates,movementProgress);
+        setMovementProgress(continueProgress(movementProgress, deltaTime, movementSpeed));
+        if (isEqual(movementProgress, 1f)) {
+            setCoordinates(destinationCoordinates);
+        }
     }
 }
