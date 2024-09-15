@@ -13,7 +13,10 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 
+import ru.mipt.bit.platformer.keys.Direction;
+import ru.mipt.bit.platformer.objects.Object;
 import ru.mipt.bit.platformer.util.Batcher;
+import ru.mipt.bit.platformer.util.KeyPressHandler;
 import ru.mipt.bit.platformer.util.TileMovement;
 import ru.mipt.bit.platformer.objects.*;
 
@@ -73,36 +76,41 @@ public class GameDesktopLauncher implements ApplicationListener {
         // get time passed since the last render
         float deltaTime = Gdx.graphics.getDeltaTime();
 
+        final  Object[] objects  = {tree};
+        final Movable[] movables = {tank};
+
         if ((isEqual(tank.getMovementProgress(), 1f))) {
-            if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
-                // check potential player destination for collision with obstacles
-                if (!tree.getCoordinates().equals(incrementedY(tank.getCoordinates()))) {
-                    tank.changeDestinationCoordinates(1, false);
-                    tank.setMovementProgress(0f);
-                }
-                tank.setRotation(90f);
-            }
-            if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
-                if (!tree.getCoordinates().equals(decrementedX(tank.getCoordinates()))) {
-                    tank.changeDestinationCoordinates(-1, true);
-                    tank.setMovementProgress(0f);
-                }
-                tank.setRotation(-180f);
-            }
-            if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
-                if (!tree.getCoordinates().equals(decrementedY(tank.getCoordinates()))) {
-                    tank.changeDestinationCoordinates(-1, false);
-                    tank.setMovementProgress(0f);
-                }
-                tank.setRotation(-90f);
-            }
-            if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
-                if (!tree.getCoordinates().equals(incrementedX(tank.getCoordinates()))) {
-                    tank.changeDestinationCoordinates(1, true);
-                    tank.setMovementProgress(0f);
-                }
-                tank.setRotation(0f);
-            }
+            KeyPressHandler.handleKeyPress
+                    (
+                            new ru.mipt.bit.platformer.keys.UP
+                                    (
+                                            objects,
+                                            movables,
+                                            new int[]{UP, W},
+                                            Direction.UP
+                                    ),
+                            new ru.mipt.bit.platformer.keys.DOWN
+                                    (
+                                            objects,
+                                            movables,
+                                            new int[]{DOWN, S},
+                                            Direction.DOWN
+                                    ),
+                            new ru.mipt.bit.platformer.keys.LEFT
+                                    (
+                                            objects,
+                                            movables,
+                                            new int[]{LEFT, A},
+                                            Direction.LEFT
+                                    ),
+                            new ru.mipt.bit.platformer.keys.RIGHT
+                                    (
+                                            objects,
+                                            movables,
+                                            new int[]{RIGHT, D},
+                                            Direction.RIGHT
+                                    )
+                    );
         }
 
         // calculate interpolated player screen coordinates

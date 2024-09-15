@@ -104,17 +104,6 @@ public class Tank implements Drawable, Movable {
     }
 
     @Override
-    public void changeDestinationCoordinates(int number, final boolean toX) {
-
-        if (toX) {
-            destinationCoordinates.x += number;
-        }
-        else {
-            destinationCoordinates.y += number;
-        }
-    }
-
-    @Override
     public void changeDestinationCoordinates(GridPoint2 direction) {
         destinationCoordinates.x += direction.x;
         destinationCoordinates.y += direction.y;
