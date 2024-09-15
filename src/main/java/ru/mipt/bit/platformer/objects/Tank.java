@@ -103,7 +103,8 @@ public class Tank implements Drawable, Movable {
         this.rotation = rotation;
     }
 
-    public void changeDestinationCoordinates(int number, boolean toX) {
+    @Override
+    public void changeDestinationCoordinates(int number, final boolean toX) {
 
         if (toX) {
             destinationCoordinates.x += number;
@@ -111,5 +112,11 @@ public class Tank implements Drawable, Movable {
         else {
             destinationCoordinates.y += number;
         }
+    }
+
+    @Override
+    public void changeDestinationCoordinates(GridPoint2 direction) {
+        destinationCoordinates.x += direction.x;
+        destinationCoordinates.y += direction.y;
     }
 }

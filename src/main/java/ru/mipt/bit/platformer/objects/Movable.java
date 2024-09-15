@@ -9,4 +9,5 @@ public interface Movable extends Object {
     void setMovementProgress(float movementProgress);
     void setRotation(float rotation);
     void changeDestinationCoordinates(int number, boolean toX);
+    void changeDestinationCoordinates(GridPoint2 direction);
 }

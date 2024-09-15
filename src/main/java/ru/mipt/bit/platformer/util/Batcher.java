@@ -16,11 +16,11 @@ public class Batcher {
         return batch;
     }
 
-    public void draw(Drawable ...drawables) {
+    public void draw(final Drawable ...drawables) {
         // start recording all drawing commands
         batch.begin();
 
-        for (Drawable drawable : drawables) {
+        for (final Drawable drawable : drawables) {
             drawTextureRegionUnscaled(batch, drawable.getGraphics(), drawable.getRectangle(), drawable.getRotation());
         }
 
