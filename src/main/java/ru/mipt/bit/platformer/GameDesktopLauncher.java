@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Interpolation;
 
 import ru.mipt.bit.platformer.util.Drawer;
 import ru.mipt.bit.platformer.util.KeyPressHandler;
+import ru.mipt.bit.platformer.util.Mover;
 import ru.mipt.bit.platformer.util.TileMovement;
 import ru.mipt.bit.platformer.objects.*;
 import ru.mipt.bit.platformer.keys.*;
@@ -44,18 +45,17 @@ public class GameDesktopLauncher implements ApplicationListener {
         final TiledMapTileLayer groundLayer = getSingleLayer(level);
         tileMovement = new TileMovement(groundLayer, Interpolation.smooth);
 
-        final Tank tank =
-                new Tank
+        final Tank tank = new Tank
                 (
                         new Texture("images/tank_blue.png"),
                         new GridPoint2(1, 1),
                         0.4f,
                         1f,
-                        0
+                        0,
+                        tileMovement
                 );
 
-        final Tree tree =
-                new Tree
+        final Tree tree = new Tree
                 (
                         new Texture("images/greenTree.png"),
                         new GridPoint2(1, 3)
@@ -107,10 +107,7 @@ public class GameDesktopLauncher implements ApplicationListener {
                         )
                 );
 
-        // calculate interpolated player screen coordinates
-        for (Movable movable : movables) {
-            movable.move(deltaTime, tileMovement);
-        }
+        Mover.move(deltaTime, movables);
 
         // render each tile of the level
         levelRenderer.render();

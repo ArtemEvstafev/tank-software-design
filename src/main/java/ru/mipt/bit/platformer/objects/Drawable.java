@@ -10,7 +10,4 @@ public interface Drawable extends Object{
     TextureRegion getGraphics();
     Rectangle getRectangle();
     void dispose();
-    default float getRotation(){
-        return 0.f;
-    }
 }
