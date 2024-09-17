@@ -14,6 +14,7 @@ public class Tree implements Drawable, Object {
     private final Texture texture;
     private final TextureRegion graphics;
     private final GridPoint2 coordinates;
+    private final float rotation = 0f;
     private final Rectangle rectangle;
 
     public Tree
@@ -28,7 +29,7 @@ public class Tree implements Drawable, Object {
         this.rectangle = createBoundingRectangle(graphics);
     }
 
-    public void moveTreeAtTileCenter(TiledMapTileLayer groundLayer) {
+    public void placeOnLayer(TiledMapTileLayer groundLayer) {
         moveRectangleAtTileCenter(groundLayer, rectangle, coordinates);
     }
 
@@ -40,6 +41,14 @@ public class Tree implements Drawable, Object {
     @Override
     public void setCoordinates(GridPoint2 coordinates) {
         this.coordinates.set(coordinates);
+    }
+
+    @Override
+    public void setRotation(float rotation) {}
+
+    @Override
+    public float getRotation() {
+        return rotation;
     }
 
     @Override

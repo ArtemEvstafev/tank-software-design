@@ -7,6 +7,6 @@ public interface Movable extends Object {
     GridPoint2 getDestinationCoordinates();
     float getMovementProgress();
     void setMovementProgress(float movementProgress);
-    void setRotation(float rotation);
-    void changeDestinationCoordinates(int number, boolean toX);
+    void changeDestinationCoordinates(GridPoint2 direction);
+    void move(float deltaTime);
 }
