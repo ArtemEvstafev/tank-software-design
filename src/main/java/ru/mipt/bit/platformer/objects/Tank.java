@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.util.TileMovement;
 
 
+import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class Tank implements Drawable, Movable {
@@ -22,25 +24,27 @@ public class Tank implements Drawable, Movable {
     private final GridPoint2 destinationCoordinates;
     private float movementProgress;
     private float rotation;
+    private final TileMovement tileMovement;
 
     public Tank
             (
                     Texture texture,
-                    GridPoint2 destinationCoordinates,
-                    float speed,
+                    GridPoint2 coordinates,
+                    float movementSpeed,
                     float movementProgress,
-                    float rotation
+                    float rotation,
+                    TileMovement tileMovement
             )
     {
-        this.movementSpeed = speed;
+        this.movementSpeed = movementSpeed;
         this.texture = texture;
         this.graphics = new TextureRegion(texture);
+        this.tileMovement = tileMovement;
         this.rectangle = createBoundingRectangle(graphics);
-        this.destinationCoordinates = destinationCoordinates;
-        this.coordinates = new GridPoint2(destinationCoordinates);
+        this.coordinates = coordinates;
+        this.destinationCoordinates = new GridPoint2(coordinates);
         this.movementProgress = movementProgress;
         this.rotation = rotation;
-
     }
 
     @Override
@@ -103,13 +107,22 @@ public class Tank implements Drawable, Movable {
         this.rotation = rotation;
     }
 
-    public void changeDestinationCoordinates(int number, boolean toX) {
+    @Override
+    public void changeDestinationCoordinates(GridPoint2 direction) {
+        destinationCoordinates.x += direction.x;
+        destinationCoordinates.y += direction.y;
+    }
 
-        if (toX) {
-            destinationCoordinates.x += number;
+    @Override
+    public void move(float deltaTime) {
+        moveRectangle(tileMovement);
+        setMovementProgress(continueProgress(movementProgress, deltaTime, movementSpeed));
+        if (isEqual(movementProgress, 1f)) {
+            setCoordinates(destinationCoordinates);
         }
-        else {
-            destinationCoordinates.y += number;
-        }
+    }
+
+    private void moveRectangle(TileMovement tileMovement) {
+        tileMovement.moveRectangleBetweenTileCenters(rectangle, coordinates, destinationCoordinates, movementProgress);
     }
 }
