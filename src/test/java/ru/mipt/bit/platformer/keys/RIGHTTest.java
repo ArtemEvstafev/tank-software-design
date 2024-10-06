@@ -7,6 +7,9 @@ import ru.mipt.bit.platformer.objects.Movable;
 import ru.mipt.bit.platformer.objects.Object;
 import ru.mipt.bit.platformer.objects.Wall;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.badlogic.gdx.Input.Keys.*;
 import static com.badlogic.gdx.Input.Keys.RIGHT;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,8 +28,8 @@ class RIGHTTest {
                         1f
                 );
 
-        ru.mipt.bit.platformer.objects.Object[] objects = {wall};
-        Movable[] movables = {ghost};
+        List<Object>   objects = new ArrayList<>(List.of( wall));
+        List<Movable> movables = new ArrayList<>(List.of(ghost));
 
         RIGHT right = new RIGHT
                 (
@@ -51,8 +54,8 @@ class RIGHTTest {
                         1f
                 );
 
-        Object[] objects = {wall};
-        Movable[] movables = {ghost};
+        List<Object>   objects = new ArrayList<>(List.of( wall));
+        List<Movable> movables = new ArrayList<>(List.of(ghost));
 
         RIGHT right = new RIGHT
                 (

@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 
+import ru.mipt.bit.platformer.objects.Object;
 import ru.mipt.bit.platformer.util.Drawer;
 import ru.mipt.bit.platformer.util.KeyPressHandler;
 import ru.mipt.bit.platformer.util.Mover;
@@ -21,6 +22,9 @@ import ru.mipt.bit.platformer.util.TileMovement;
 import ru.mipt.bit.platformer.objects.*;
 import ru.mipt.bit.platformer.keys.*;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.badlogic.gdx.Input.Keys.*;
 import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
@@ -34,8 +38,8 @@ public class GameDesktopLauncher implements ApplicationListener {
     private MapRenderer levelRenderer;
     private TileMovement tileMovement;
 
-    private Drawable[] drawables;
-    private  Movable[]  movables;
+    private List<Drawable> drawables;
+    private List<Movable>  movables;
 
     @Override
     public void create() {
@@ -62,8 +66,8 @@ public class GameDesktopLauncher implements ApplicationListener {
                 );
         tree.placeOnLayer(groundLayer);
 
-        drawables = new Drawable[]{tank, tree};
-        movables  = new  Movable[]{tank};
+        drawables = new ArrayList<>(List.of(tank, tree));
+        movables  = new ArrayList<>(List.of(tank));
     }
 
     @Override

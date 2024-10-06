@@ -5,17 +5,18 @@ import ru.mipt.bit.platformer.objects.Movable;
 import ru.mipt.bit.platformer.objects.Object;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static com.badlogic.gdx.math.MathUtils.isEqual;
 
 public abstract class MovementKey implements Key {
 
-    protected final Object[] obstacles;
-    private final Movable[] movables;
+    protected final List<? extends Object> obstacles;
+    private final List<Movable> movables;
     private final int[] keys;
     private final Direction dir;
 
-    public MovementKey(Object[] obstacles, Movable[] movables, int[] keys, Direction dir) {
+    public MovementKey(List<? extends Object> obstacles, List<Movable> movables, int[] keys, Direction dir) {
         this.obstacles = obstacles;
         this.movables  =  movables;
         this.keys = keys;
