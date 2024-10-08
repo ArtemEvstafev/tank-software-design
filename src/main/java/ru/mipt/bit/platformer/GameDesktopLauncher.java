@@ -7,67 +7,68 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 
-import ru.mipt.bit.platformer.objects.Object;
-import ru.mipt.bit.platformer.util.Drawer;
-import ru.mipt.bit.platformer.util.KeyPressHandler;
-import ru.mipt.bit.platformer.util.Mover;
-import ru.mipt.bit.platformer.util.TileMovement;
+import ru.mipt.bit.platformer.generators.CoordinatesGenerator;
+import ru.mipt.bit.platformer.generators.ObjectGenerator;
+import ru.mipt.bit.platformer.generators.SimpleIntegerGenerator;
+import ru.mipt.bit.platformer.generators.TreeGenerator;
+import ru.mipt.bit.platformer.util.*;
 import ru.mipt.bit.platformer.objects.*;
 import ru.mipt.bit.platformer.keys.*;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.badlogic.gdx.Input.Keys.*;
 import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
 
-import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
-
 public class GameDesktopLauncher implements ApplicationListener {
 
     private Batch batch;
-    private TiledMap level;
-    private MapRenderer levelRenderer;
-    private TileMovement tileMovement;
+    private DrawableLevel level;
 
-    private List<Drawable> drawables;
-    private List<Movable>  movables;
+    private Collection<Drawable> drawables;
+    private Collection< Movable>  movables;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        level = new TmxMapLoader().load("level.tmx");
-        levelRenderer = createSingleLayerMapRenderer(level, batch);
-        final TiledMapTileLayer groundLayer = getSingleLayer(level);
-        tileMovement = new TileMovement(groundLayer, Interpolation.smooth);
+        level = new DrawableLevel(new TmxMapLoader().load("level.tmx"), batch);
+        Mover mover = new Mover(new TileMovement(level.getGroundLayer(), Interpolation.smooth));
 
         final Tank tank = new Tank
                 (
                         new Texture("images/tank_blue.png"),
-                        new GridPoint2(1, 1),
+                        new GridPoint2(0, 0),
                         0.4f,
                         1f,
                         0,
-                        tileMovement
+                        mover.getTileMovement()
                 );
 
         final Tree tree = new Tree
                 (
                         new Texture("images/greenTree.png"),
-                        new GridPoint2(1, 3)
+                        new GridPoint2(1, 3),
+                        level.getGroundLayer()
                 );
-        tree.placeOnLayer(groundLayer);
 
-        drawables = new ArrayList<>(List.of(tank, tree));
-        movables  = new ArrayList<>(List.of(tank));
+        ObjectGenerator<Tree> treeObjectGenerator = new TreeGenerator(
+                new CoordinatesGenerator(new SimpleIntegerGenerator(), 8, 10),
+                List.of("images/greenTree.png"),
+                level.getGroundLayer()
+        );
+
+        drawables = new HashSet<>(List.of(tree, tank));
+        movables  = new HashSet<>(List.of(tank));
+
+        treeObjectGenerator.generate(5, drawables);
+        for (Drawable drawable : drawables) {
+            System.out.println(drawable.getCoordinates());
+        }
     }
 
     @Override
@@ -114,7 +115,7 @@ public class GameDesktopLauncher implements ApplicationListener {
         Mover.move(deltaTime, movables);
 
         // render each tile of the level
-        levelRenderer.render();
+        level.render();
 
         batch.begin();
 

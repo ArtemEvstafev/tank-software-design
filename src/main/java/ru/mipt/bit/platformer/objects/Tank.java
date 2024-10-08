@@ -1,11 +1,14 @@
 package ru.mipt.bit.platformer.objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.util.TileMovement;
 
+
+import java.util.Objects;
 
 import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
@@ -73,6 +76,11 @@ public class Tank implements Drawable, Movable {
     }
 
     @Override
+    public void draw(Batch batch) {
+        drawTextureRegionUnscaled(batch, graphics, rectangle, rotation);
+    }
+
+    @Override
     public GridPoint2 getCoordinates() {
         return coordinates;
     }
@@ -125,4 +133,18 @@ public class Tank implements Drawable, Movable {
     private void moveRectangle(TileMovement tileMovement) {
         tileMovement.moveRectangleBetweenTileCenters(rectangle, coordinates, destinationCoordinates, movementProgress);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GameObject)) return false;
+        GameObject gobject = (GameObject) o;
+        return Objects.equals(getCoordinates(), gobject.getCoordinates());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getCoordinates());
+    }
+
 }

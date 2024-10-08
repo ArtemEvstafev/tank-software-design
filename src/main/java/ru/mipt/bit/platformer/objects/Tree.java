@@ -1,15 +1,17 @@
 package ru.mipt.bit.platformer.objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 
-import static ru.mipt.bit.platformer.util.GdxGameUtils.createBoundingRectangle;
-import static ru.mipt.bit.platformer.util.GdxGameUtils.moveRectangleAtTileCenter;
+import java.util.Objects;
 
-public class Tree implements Drawable, Object {
+import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
+
+public class Tree implements Drawable, GameObject {
 
     private final Texture texture;
     private final TextureRegion graphics;
@@ -20,13 +22,15 @@ public class Tree implements Drawable, Object {
     public Tree
             (
                     Texture greenTreeTexture,
-                    GridPoint2 treeObstacleCoordinates
+                    GridPoint2 treeObstacleCoordinates,
+                    TiledMapTileLayer groundLayer
             )
     {
         this.texture = greenTreeTexture;
         this.graphics = new TextureRegion(greenTreeTexture);
         this.coordinates = treeObstacleCoordinates;
         this.rectangle = createBoundingRectangle(graphics);
+        this.placeOnLayer(groundLayer);
     }
 
     public void placeOnLayer(TiledMapTileLayer groundLayer) {
@@ -71,4 +75,21 @@ public class Tree implements Drawable, Object {
         texture.dispose();
     }
 
+    @Override
+    public void draw(Batch batch) {
+        drawTextureRegionUnscaled(batch, graphics, rectangle, rotation);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GameObject)) return false;
+        GameObject gobject = (GameObject) o;
+        return Objects.equals(getCoordinates(), gobject.getCoordinates());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getCoordinates());
+    }
 }

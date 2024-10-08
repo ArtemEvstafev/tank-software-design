@@ -2,12 +2,23 @@ package ru.mipt.bit.platformer.util;
 
 import ru.mipt.bit.platformer.objects.Movable;
 
-import java.util.List;
+import java.util.Collection;
 
 public class Mover {
-    public static void move(float deltaTime, final List<Movable> movables) {
+
+    private final TileMovement tileMovement;
+
+    public Mover(TileMovement tileMovement) {
+        this.tileMovement = tileMovement;
+    }
+
+    public static void move(float deltaTime, final Collection<Movable> movables) {
         for (Movable movable : movables) {
             movable.move(deltaTime);
         }
+    }
+
+    public TileMovement getTileMovement() {
+        return tileMovement;
     }
 }

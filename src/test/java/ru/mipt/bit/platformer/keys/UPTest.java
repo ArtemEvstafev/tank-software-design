@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.objects.Ghost;
 import ru.mipt.bit.platformer.objects.Movable;
-import ru.mipt.bit.platformer.objects.Object;
+import ru.mipt.bit.platformer.objects.GameObject;
 import ru.mipt.bit.platformer.objects.Wall;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ class UPTest {
                         1f
                 );
 
-        List<Object>   objects = new ArrayList<>(List.of( wall));
+        List<GameObject>   objects = new ArrayList<>(List.of( wall));
         List<Movable> movables = new ArrayList<>(List.of(ghost));
 
         UP up = new UP
@@ -54,7 +54,7 @@ class UPTest {
                         1f
                 );
 
-        List<Object> objects = new ArrayList<>(List.of( wall));
+        List<GameObject> objects = new ArrayList<>(List.of( wall));
         List<Movable> movables = new ArrayList<>(List.of(ghost));
 
         UP up = new UP

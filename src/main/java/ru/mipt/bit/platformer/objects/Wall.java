@@ -2,7 +2,7 @@ package ru.mipt.bit.platformer.objects;
 
 import com.badlogic.gdx.math.GridPoint2;
 
-public class Wall implements Object {
+public class Wall implements GameObject {
 
     private GridPoint2 coordinates;
     private float rotation = 0f;
