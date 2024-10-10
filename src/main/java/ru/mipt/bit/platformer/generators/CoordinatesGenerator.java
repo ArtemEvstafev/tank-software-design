@@ -3,9 +3,8 @@ package ru.mipt.bit.platformer.generators;
 import com.badlogic.gdx.math.GridPoint2;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import static java.lang.Math.min;
 
 public class CoordinatesGenerator implements ObjectGenerator<GridPoint2> {
 
@@ -20,15 +19,26 @@ public class CoordinatesGenerator implements ObjectGenerator<GridPoint2> {
 
     @Override
     public void generate(int n, Collection<? super GridPoint2> destination) {
-        n = Math.min(n, height * width / 2);
-        Set<GridPoint2> objects = new HashSet<>();
-        while (objects.size() < n) {
-            objects.add(new GridPoint2(integerGenerator.generate(0, width - 1), integerGenerator.generate(0, height - 1)));
+        final int size = destination.size();
+        while (destination.size() < min(n + size, width * height)) {
+            destination.add(new GridPoint2(integerGenerator.generate(0, width - 1), integerGenerator.generate(0, height - 1)));
         }
-        destination.addAll(objects);
+    }
+
+    @Override
+    public GridPoint2 generate() {
+        return new GridPoint2(integerGenerator.generate(0, width - 1), integerGenerator.generate(0, height - 1));
     }
 
     public IntegerGenerator getIntegerGenerator() {
         return integerGenerator;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

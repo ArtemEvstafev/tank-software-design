@@ -1,13 +1,10 @@
 package ru.mipt.bit.platformer.generators;
 
-import static com.badlogic.gdx.math.MathUtils.random;
-import static java.lang.Math.abs;
-
 import java.util.Random;
 
 public class SimpleIntegerGenerator implements IntegerGenerator {
 
-    private Random random;
+    private final Random random;
 
     public SimpleIntegerGenerator() {
         random = new Random();

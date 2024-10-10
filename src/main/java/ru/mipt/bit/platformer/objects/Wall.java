@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.GridPoint2;
 
 public class Wall implements GameObject {
 
-    private GridPoint2 coordinates;
-    private float rotation = 0f;
+    private final GridPoint2 coordinates;
+    private final float rotation = 0f;
 
     public Wall(GridPoint2 coordinates) {
         this.coordinates = coordinates;

@@ -37,38 +37,33 @@ public class GameDesktopLauncher implements ApplicationListener {
     public void create() {
         batch = new SpriteBatch();
         level = new DrawableLevel(new TmxMapLoader().load("level.tmx"), batch);
-        Mover mover = new Mover(new TileMovement(level.getGroundLayer(), Interpolation.smooth));
+        final Mover mover = new Mover(new TileMovement(level.getGroundLayer(), Interpolation.smooth));
+
+        final CoordinatesGenerator coordinatesGenerator = new CoordinatesGenerator(new SimpleIntegerGenerator(), level.getHeight(), level.getWidth());
 
         final Tank tank = new Tank
                 (
                         new Texture("images/tank_blue.png"),
-                        new GridPoint2(0, 0),
+                        coordinatesGenerator.generate(),
                         0.4f,
                         1f,
                         0,
                         mover.getTileMovement()
                 );
 
-        final Tree tree = new Tree
-                (
-                        new Texture("images/greenTree.png"),
-                        new GridPoint2(1, 3),
-                        level.getGroundLayer()
-                );
-
-        ObjectGenerator<Tree> treeObjectGenerator = new TreeGenerator(
-                new CoordinatesGenerator(new SimpleIntegerGenerator(), 8, 10),
+        final ObjectGenerator<Tree> treeGenerator = new TreeGenerator(
+                coordinatesGenerator,
                 List.of("images/greenTree.png"),
                 level.getGroundLayer()
         );
 
-        drawables = new HashSet<>(List.of(tree, tank));
+        drawables = new HashSet<>(List.of(tank));
         movables  = new HashSet<>(List.of(tank));
+        treeGenerator.generate(30, drawables);
+        System.out.println(drawables.size());
 
-        treeObjectGenerator.generate(5, drawables);
-        for (Drawable drawable : drawables) {
-            System.out.println(drawable.getCoordinates());
-        }
+        final FileSaver fileSaver = new TxtSaver(level, drawables);
+        fileSaver.saveToFile();
     }
 
     @Override

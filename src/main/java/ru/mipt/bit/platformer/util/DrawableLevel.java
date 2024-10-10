@@ -12,9 +12,14 @@ public class DrawableLevel {
     final private TiledMap level;
     final private MapRenderer levelRenderer;
     final private TiledMapTileLayer groundLayer;
+    final private int width, height;
 
     public DrawableLevel(TiledMap level, Batch batch) {
         this.level = level;
+        //Don't know how to get them from file info. Should I parse it by myself or what?
+        width = 10;
+        height = 8;
+
         levelRenderer = createSingleLayerMapRenderer(level, batch);
         groundLayer = getSingleLayer(level);
     }
@@ -25,6 +30,14 @@ public class DrawableLevel {
 
     public TiledMap getLevel() {
         return level;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public TiledMapTileLayer getGroundLayer() {

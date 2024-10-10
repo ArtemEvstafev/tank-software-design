@@ -7,6 +7,8 @@ import ru.mipt.bit.platformer.objects.Tree;
 
 import java.util.*;
 
+import static java.lang.Math.min;
+
 public class TreeGenerator implements ObjectGenerator<Tree> {
     final private CoordinatesGenerator coordinatesGenerator;
     final private IntegerGenerator integerGenerator;
@@ -29,14 +31,22 @@ public class TreeGenerator implements ObjectGenerator<Tree> {
 
     @Override
     public void generate(int n, Collection<? super Tree> destination) {
-        List<GridPoint2> positions = new ArrayList<>();
-        coordinatesGenerator.generate(n, positions);
-        positions.stream().forEach(position -> {
+        final int size = destination.size();
+        while (destination.size() < min(n + size, coordinatesGenerator.getHeight() * coordinatesGenerator.getWidth())) {
             destination.add(new Tree(
                     new Texture(textures.get(integerGenerator.generate(0, textures.size() - 1))),
-                    position,
+                    coordinatesGenerator.generate(),
                     groundLayer
             ));
-        });
+        }
+    }
+
+    @Override
+    public Tree generate() {
+        return new Tree(new Texture(
+                textures.get(integerGenerator.generate(0, textures.size() - 1))),
+                coordinatesGenerator.generate(),
+                groundLayer
+        );
     }
 }
