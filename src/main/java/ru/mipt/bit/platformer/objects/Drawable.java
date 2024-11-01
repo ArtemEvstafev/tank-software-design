@@ -24,7 +24,7 @@ public interface Drawable extends GameObject {
 
     void draw(Batch batch);
 
-    default void showHealth(){
+    default void setDrawHealth(boolean drawHealth) {
         return;
     };
 }

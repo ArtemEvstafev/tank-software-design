@@ -1,7 +1,6 @@
 package ru.mipt.bit.platformer.keys;
 
 import com.badlogic.gdx.Gdx;
-import ru.mipt.bit.platformer.objects.Destroyable;
 import ru.mipt.bit.platformer.objects.Drawable;
 
 import java.util.Arrays;
@@ -27,9 +26,9 @@ public class HealthToggleKey implements Key {
     }
 
     @Override
-    public void action() {//
+    public void action() {
         for (Drawable drawable : drawables) {
-            drawable.showHealth();
+            drawable.setDrawHealth(true);
         }
     }
 }

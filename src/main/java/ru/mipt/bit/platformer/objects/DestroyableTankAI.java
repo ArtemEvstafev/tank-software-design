@@ -1,6 +1,7 @@
 package ru.mipt.bit.platformer.objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.generators.IntegerGenerator;
 import ru.mipt.bit.platformer.util.TileMovement;
@@ -8,7 +9,7 @@ import ru.mipt.bit.platformer.util.TileMovement;
 public class DestroyableTankAI extends TankAI implements Destroyable {
 
     private int health;
-    private boolean showHealth = false;
+    private boolean drawHealth = false;
 
     public DestroyableTankAI(Texture texture,
                              GridPoint2 coordinates,
@@ -38,12 +39,20 @@ public class DestroyableTankAI extends TankAI implements Destroyable {
     }
 
     @Override
-    public void showHealth(){
-        setHealth(true);
+    public void setDrawHealth(boolean drawHealth){
+        this.drawHealth = drawHealth;
     }
 
-    private void setHealth(boolean showHealth) {
-        this.showHealth = showHealth;
+
+    @Override
+    public void draw(Batch batch) {
+        super.draw(batch);
+        if (drawHealth) {
+            showHealth();
+        }
     }
 
+    private void showHealth() {
+        return; // How?
+    }
 }
