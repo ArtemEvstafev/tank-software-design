@@ -1,0 +1,114 @@
+package ru.mipt.bit.platformer.objects.physical;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.objects.interfaces.Destroyable;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
+import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
+import ru.mipt.bit.platformer.util.GdxGameUtils;
+import ru.mipt.bit.platformer.util.HealthBarSetting;
+
+public class MakeDrawableDestroyableDecorator extends TankAI implements Drawable, Destroyable {
+
+    Drawable wrapped;
+    private int health;
+
+    public MakeDrawableDestroyableDecorator(TankAI wrapped,
+                                            int health) {
+        super(wrapped);
+        this.wrapped = wrapped;
+        this.health = health;
+    }
+
+    @Override
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    @Override
+    public int getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void destroy() {
+        setHealth(0);
+    }
+
+    @Override
+    public Texture getTexture() {
+        return wrapped.getTexture();
+    }
+
+    @Override
+    public void setTexture(Texture texture) {
+        wrapped.setTexture(texture);
+    }
+
+    @Override
+    public TextureRegion getGraphics() {
+        return wrapped.getGraphics();
+    }
+
+    @Override
+    public void setGraphics(TextureRegion graphics) {
+        wrapped.setGraphics(graphics);
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return wrapped.getRectangle();
+    }
+
+    @Override
+    public void setRectangle(Rectangle rectangle) {
+        wrapped.setRectangle(rectangle);
+    }
+
+    @Override
+    public Character getDrawableCharacter() {
+        return wrapped.getDrawableCharacter();
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void draw(Batch batch) {
+        wrapped.draw(batch);
+        if (HealthBarSetting.showHealthBar == true) {
+            renderHealthbar(batch);
+        }
+    }
+
+    private void renderHealthbar(Batch batch) {
+        var healthbarTexture = getHealthbarTexture(health);
+        var rectangle = createRectangle();
+        GdxGameUtils.drawTextureRegionUnscaled(batch, healthbarTexture, rectangle, 0f);
+    }
+
+    private TextureRegion getHealthbarTexture(float relativeHealth) {
+        var pixmap = new Pixmap(90, 20, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fillRectangle(0, 0, 90, 20);
+        pixmap.setColor(Color.GREEN);
+        pixmap.fillRectangle(0, 0, (int) (90 * relativeHealth), 20);
+        var texture = new Texture(pixmap);
+        pixmap.dispose();
+        return new TextureRegion(texture);
+    }
+
+    private Rectangle createRectangle() {
+        var rectangle = new Rectangle(getRectangle());
+        rectangle.y += 90;
+        return rectangle;
+    }
+}

@@ -6,7 +6,7 @@ public abstract class KeyPressHandler {
     public static void handleKeyPress(Key ...keys) {
         for (Key k : keys) {
             if (k.isPressed())
-                k.action();
+                k.doAction();
         }
     }
 }

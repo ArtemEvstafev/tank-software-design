@@ -1,9 +1,9 @@
 package ru.mipt.bit.platformer.util;
 
-import ru.mipt.bit.platformer.objects.Drawable;
-import ru.mipt.bit.platformer.objects.Tank;
-import ru.mipt.bit.platformer.objects.TankAI;
-import ru.mipt.bit.platformer.objects.Tree;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.physical.Tank;
+import ru.mipt.bit.platformer.objects.physical.TankAI;
+import ru.mipt.bit.platformer.objects.physical.Tree;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;

@@ -1,11 +1,12 @@
-package ru.mipt.bit.platformer.util;
+package ru.mipt.bit.platformer.util.files;
 
 import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
-import ru.mipt.bit.platformer.objects.Drawable;
-import ru.mipt.bit.platformer.objects.Tank;
-import ru.mipt.bit.platformer.objects.TankAI;
-import ru.mipt.bit.platformer.objects.Tree;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.physical.Tank;
+import ru.mipt.bit.platformer.objects.physical.TankAI;
+import ru.mipt.bit.platformer.objects.physical.Tree;
+import ru.mipt.bit.platformer.util.CharToDrawableConverter;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.util;
+package ru.mipt.bit.platformer.util.gameLoaders;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,7 +8,18 @@ import com.badlogic.gdx.math.Interpolation;
 import ru.mipt.bit.platformer.generators.*;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.levels.EmptyDrawableLevel;
-import ru.mipt.bit.platformer.objects.*;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObject;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
+import ru.mipt.bit.platformer.objects.interfaces.Movable;
+import ru.mipt.bit.platformer.objects.physical.MakeDrawableDestroyableDecorator;
+import ru.mipt.bit.platformer.objects.physical.Tank;
+import ru.mipt.bit.platformer.objects.physical.TankAI;
+import ru.mipt.bit.platformer.objects.physical.Tree;
+import ru.mipt.bit.platformer.util.Mover;
+import ru.mipt.bit.platformer.util.TileMovement;
+import ru.mipt.bit.platformer.util.files.FileSaver;
+import ru.mipt.bit.platformer.util.files.TxtSaver;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -37,27 +48,6 @@ public class RandomGeneratedGameLoader implements GameLoader {
                         level.getWidth()
                 );
 
-        final Tank tankMy = new Tank
-                (
-                        new Texture("images/tank_blue.png"),
-                        coordinatesGenerator.generate(),
-                        0.4f,
-                        1f,
-                        0,
-                        mover.getTileMovement()
-                );
-
-        final TankAI tankAI = new TankAI
-                (
-                        new Texture("images/tank_blue.png"),
-                        coordinatesGenerator.generate(),
-                        0.4f,
-                        1f,
-                        0,
-                        mover.getTileMovement(),
-                        simpleIntegerGenerator
-                );
-
         final ObjectGenerator<TankAI> tankAIGenerator = new TankAIGenerator(
                 List.of("images/tank_blue.png"),
                 coordinatesGenerator,
@@ -74,15 +64,46 @@ public class RandomGeneratedGameLoader implements GameLoader {
                 level.getGroundLayer()
         );
 
-        drawables.add(tankMy);
-        drawables.add(tankAI);
-         movables.add(tankMy);
-         movables.add(tankAI);
+        final Tank tankPlayer = new Tank
+                (
+                        new Texture("images/tank_blue.png"),
+                        coordinatesGenerator.generate(),
+                        0.4f,
+                        1f,
+                        0,
+                        mover.getTileMovement()
+                );
 
-        Collection<TankAI> tmp = (Collection<TankAI>) tankAIGenerator.generate(3, drawables);
-        movables.addAll(tmp);
+        final TankAI tankAI =
+                new TankAI
+                (
+                        new Texture("images/tank_blue.png"),
+                        coordinatesGenerator.generate(),
+                        0.4f,
+                        1f,
+                        0,
+                        mover.getTileMovement(),
+                        simpleIntegerGenerator
+                );
 
-        drawables = (Collection<Drawable>) treeGenerator.generate(20, drawables);
+        Collection<GameObjectAbt> allObjects = new HashSet<>();
+
+        drawables.add(new MakeDrawableDestroyableDecorator(tankAI, 37));
+        movables.add(tankAI);
+        movables.add(tankPlayer);
+        drawables.add(tankPlayer);
+
+        tankAIGenerator.generate( 3, allObjects);
+          treeGenerator.generate(20, allObjects);
+
+        for (GameObjectAbt allObject : allObjects) {
+            if (allObject instanceof Movable) {
+                movables.add((Movable) allObject);
+            }
+            if (allObject instanceof Drawable) {
+                drawables.add((Drawable) allObject);
+            }
+        }
 
         final FileSaver fileSaver = new TxtSaver(level, drawables);
         fileSaver.saveToFile("src/main/res/level.txt");

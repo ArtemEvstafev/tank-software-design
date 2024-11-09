@@ -2,7 +2,7 @@ package ru.mipt.bit.platformer.generators;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import ru.mipt.bit.platformer.objects.Tree;
+import ru.mipt.bit.platformer.objects.physical.Tree;
 
 import java.util.*;
 
@@ -29,11 +29,7 @@ public class TreeGenerator implements ObjectGenerator<Tree> {
     public Collection<? super Tree> generate(int n, Collection<? super Tree> destination) {
         final int size = destination.size();
         while (destination.size() < min(n + size, coordinatesGenerator.getHeight() * coordinatesGenerator.getWidth())) {
-            destination.add(new Tree(
-                    new Texture(textures.get(integerGenerator.generate(0, textures.size() - 1))),
-                    coordinatesGenerator.generate(),
-                    groundLayer
-            ));
+            destination.add(generate());
         }
         return destination;
     }

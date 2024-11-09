@@ -3,9 +3,9 @@ package ru.mipt.bit.platformer.keys;
 import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.levels.BorderLevel;
-import ru.mipt.bit.platformer.objects.Ghost;
-import ru.mipt.bit.platformer.objects.GameObject;
-import ru.mipt.bit.platformer.objects.Wall;
+import ru.mipt.bit.platformer.objects.physical.Ghost;
+import ru.mipt.bit.platformer.objects.interfaces.GameObject;
+import ru.mipt.bit.platformer.objects.physical.Wall;
 
 import java.util.ArrayList;
 import java.util.List;

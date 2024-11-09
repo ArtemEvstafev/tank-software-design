@@ -1,7 +1,7 @@
 package ru.mipt.bit.platformer.generators;
 
 import com.badlogic.gdx.graphics.Texture;
-import ru.mipt.bit.platformer.objects.TankAI;
+import ru.mipt.bit.platformer.objects.physical.TankAI;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 import java.util.Collection;
@@ -56,16 +56,7 @@ public class TankAIGenerator implements ObjectGenerator<TankAI> {
     public Collection<? super TankAI> generate(int n, Collection<? super TankAI> destination) {
         final int size = destination.size();
         while (destination.size() < min(n + size, coordinatesGenerator.getHeight() * coordinatesGenerator.getWidth())) {
-            destination.add(new TankAI
-                    (
-                            new Texture(textures.get(generateIndex())),
-                            coordinatesGenerator.generate(),
-                            movementSpeeds.get(generateIndex()),
-                            movementProgress,
-                            rotations.get(generateIndex()),
-                            tileMovement,
-                            integerGenerator
-                    ));
+            destination.add(generate());
         }
         return destination;
     }

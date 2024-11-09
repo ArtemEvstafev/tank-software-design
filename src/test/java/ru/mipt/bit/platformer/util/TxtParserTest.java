@@ -1,6 +1,7 @@
 package ru.mipt.bit.platformer.util;
 
 import org.junit.jupiter.api.Test;
+import ru.mipt.bit.platformer.util.files.TxtParser;
 
 import static org.junit.jupiter.api.Assertions.*;
 

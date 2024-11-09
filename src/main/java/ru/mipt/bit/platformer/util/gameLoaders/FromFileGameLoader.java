@@ -1,13 +1,14 @@
-package ru.mipt.bit.platformer.util;
+package ru.mipt.bit.platformer.util.gameLoaders;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.levels.FromFileDrawableLevel;
-import ru.mipt.bit.platformer.objects.Drawable;
-import ru.mipt.bit.platformer.objects.GameObjectAbt;
-import ru.mipt.bit.platformer.objects.Movable;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
+import ru.mipt.bit.platformer.objects.interfaces.Movable;
+import ru.mipt.bit.platformer.util.files.TxtParser;
 
 import java.util.Collection;
 import java.util.HashSet;

@@ -4,22 +4,16 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Interpolation;
 
-import ru.mipt.bit.platformer.generators.CoordinatesGenerator;
-import ru.mipt.bit.platformer.generators.ObjectGenerator;
-import ru.mipt.bit.platformer.generators.SimpleIntegerGenerator;
-import ru.mipt.bit.platformer.generators.TreeGenerator;
-import ru.mipt.bit.platformer.levels.EmptyDrawableLevel;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
-import ru.mipt.bit.platformer.levels.FromFileDrawableLevel;
+import ru.mipt.bit.platformer.objects.interfaces.Destroyable;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.Movable;
 import ru.mipt.bit.platformer.util.*;
-import ru.mipt.bit.platformer.objects.*;
 import ru.mipt.bit.platformer.keys.*;
+import ru.mipt.bit.platformer.util.gameLoaders.GameLoader;
+import ru.mipt.bit.platformer.util.gameLoaders.RandomGeneratedGameLoader;
 
 
 import java.util.*;
@@ -38,8 +32,8 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     @Override
     public void create() {
-//        GameLoader gameLoader = new RandomGeneratedGameLoader();
-        GameLoader gameLoader = new FromFileGameLoader();
+        GameLoader gameLoader = new RandomGeneratedGameLoader();
+//        GameLoader gameLoader = new FromFileGameLoader();
         batch     = gameLoader.getBatch();
         level     = gameLoader.getLevel();
         drawables = gameLoader.getDrawables();

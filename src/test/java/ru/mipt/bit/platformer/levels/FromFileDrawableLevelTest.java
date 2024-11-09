@@ -1,13 +1,7 @@
 package ru.mipt.bit.platformer.levels;
 
 import org.junit.jupiter.api.Test;
-import ru.mipt.bit.platformer.objects.GameObjectAbt;
-import ru.mipt.bit.platformer.util.TxtParser;
 
-import java.util.Collection;
-import java.util.HashSet;
-
-import static org.junit.jupiter.api.Assertions.*;
 class FromFileDrawableLevelTest {
 
     @Test

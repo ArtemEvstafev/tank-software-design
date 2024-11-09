@@ -1,10 +1,13 @@
-package ru.mipt.bit.platformer.objects;
+package ru.mipt.bit.platformer.objects.physical;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.objects.GDX.TankGDX;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.Movable;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 
@@ -12,14 +15,8 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class Tank extends Ghost implements Drawable, Movable {
 
-    // Texture decodes an image file and loads it into GPU memory, it represents a native resource
-    private Texture texture;
-    // TextureRegion represents Texture portion, there may be many TextureRegion instances of the same Texture
-    private TextureRegion graphics;
-    private Rectangle rectangle;
-    // player current position coordinates on level 10x8 grid (e.g. x=0, y=1)
-    // which tile the player want to go next
-    private final TileMovement tileMovement;
+    protected TankGDX tankGDX;
+    protected final TileMovement tileMovement;
     private static final Character drawableCharacter = 'X';
 
     public Tank
@@ -33,40 +30,42 @@ public class Tank extends Ghost implements Drawable, Movable {
             ) {
         super(coordinates, movementSpeed, movementProgress);
         this.rotation = rotation;
-        this.texture = texture;
-        this.graphics = new TextureRegion(texture);
+        this.tankGDX = new TankGDX(texture);
         this.tileMovement = tileMovement;
-        this.rectangle = createBoundingRectangle(graphics);
+    }
+
+    public TileMovement getTileMovement() {
+        return tileMovement;
     }
 
     @Override
     public Texture getTexture() {
-        return texture;
+        return tankGDX.getTexture();
     }
 
     @Override
     public void setTexture(Texture texture) {
-        this.texture = texture;
+        tankGDX.setTexture(texture);
     }
 
     @Override
     public TextureRegion getGraphics() {
-        return graphics;
+        return tankGDX.getGraphics();
     }
 
     @Override
     public void setGraphics(TextureRegion graphics) {
-        this.graphics = graphics;
+        tankGDX.setGraphics(graphics);
     }
 
     @Override
     public Rectangle getRectangle() {
-        return rectangle;
+        return tankGDX.getRectangle();
     }
 
     @Override
     public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
+        tankGDX.setRectangle(rectangle);
     }
 
     @Override
@@ -74,27 +73,23 @@ public class Tank extends Ghost implements Drawable, Movable {
         return drawableCharacter;
     }
 
+    @Override
+    public void dispose() {
+        tankGDX.dispose();
+    }
+
+    @Override
+    public void draw(Batch batch) {
+        drawTextureRegionUnscaled(batch, tankGDX.getGraphics(), tankGDX.getRectangle(), rotation);
+    }
+
     public static Character getDrawableCharacterStatic() {
         return drawableCharacter;
     }
 
     @Override
-    public void dispose() {
-        texture.dispose();
-    }
-
-    @Override
-    public void draw(Batch batch) {
-        drawTextureRegionUnscaled(batch, graphics, rectangle, rotation);
-    }
-
-    @Override
     public void changeMovementState(float deltaTime) {
-        moveRectangle(tileMovement);
+        tileMovement.moveRectangleBetweenTileCenters(tankGDX.getRectangle(), coordinates, destinationCoordinates, movementProgress);
         super.changeMovementState(deltaTime);
-    }
-
-    private void moveRectangle(TileMovement tileMovement) {
-        tileMovement.moveRectangleBetweenTileCenters(rectangle, coordinates, destinationCoordinates, movementProgress);
     }
 }

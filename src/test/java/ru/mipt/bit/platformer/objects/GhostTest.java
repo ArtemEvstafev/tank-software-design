@@ -2,6 +2,7 @@ package ru.mipt.bit.platformer.objects;
 
 import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
+import ru.mipt.bit.platformer.objects.physical.Ghost;
 
 import static org.junit.jupiter.api.Assertions.*;
 

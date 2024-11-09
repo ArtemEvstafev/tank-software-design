@@ -1,7 +1,7 @@
 package ru.mipt.bit.platformer.util;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import ru.mipt.bit.platformer.objects.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 
 import java.util.Collection;
 

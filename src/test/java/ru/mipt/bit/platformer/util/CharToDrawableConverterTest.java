@@ -1,12 +1,6 @@
 package ru.mipt.bit.platformer.util;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
-import ru.mipt.bit.platformer.objects.Drawable;
-import ru.mipt.bit.platformer.objects.Tank;
-import ru.mipt.bit.platformer.objects.TankAI;
-import ru.mipt.bit.platformer.objects.Tree;
 
 import static org.junit.jupiter.api.Assertions.*;
 

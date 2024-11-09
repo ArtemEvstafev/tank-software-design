@@ -6,9 +6,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 import ru.mipt.bit.platformer.generators.SimpleIntegerGenerator;
-import ru.mipt.bit.platformer.objects.*;
-import ru.mipt.bit.platformer.util.FileParser;
-import ru.mipt.bit.platformer.util.Mover;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
+import ru.mipt.bit.platformer.objects.physical.Tank;
+import ru.mipt.bit.platformer.objects.physical.TankAI;
+import ru.mipt.bit.platformer.objects.physical.Tree;
+import ru.mipt.bit.platformer.util.files.FileParser;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 import java.io.IOException;

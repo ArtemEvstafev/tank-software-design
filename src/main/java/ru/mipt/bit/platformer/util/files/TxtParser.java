@@ -1,6 +1,7 @@
-package ru.mipt.bit.platformer.util;
+package ru.mipt.bit.platformer.util.files;
 
 import com.badlogic.gdx.math.GridPoint2;
+import ru.mipt.bit.platformer.util.CharToDrawableConverter;
 
 import java.io.IOException;
 import java.util.*;

@@ -1,9 +1,9 @@
-package ru.mipt.bit.platformer.util;
+package ru.mipt.bit.platformer.util.gameLoaders;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
-import ru.mipt.bit.platformer.objects.Drawable;
-import ru.mipt.bit.platformer.objects.Movable;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.Movable;
 
 import java.util.Collection;
 

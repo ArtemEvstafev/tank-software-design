@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.objects;
+package ru.mipt.bit.platformer.objects.interfaces;
 
 import ru.mipt.bit.platformer.keys.Direction;
 

@@ -1,38 +1,26 @@
-package ru.mipt.bit.platformer.objects;
+package ru.mipt.bit.platformer.objects.GDX;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 
-import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
+import static ru.mipt.bit.platformer.util.GdxGameUtils.createBoundingRectangle;
 
-public class Tree extends GameObjectAbt implements Drawable, GameObject {
+public class TreeGDX implements ObjectGDX {
 
     private Texture texture;
     private TextureRegion graphics;
     private Rectangle rectangle;
-    private static final Character drawableCharacter = 'T';
 
-    public Tree
-            (
-                    Texture greenTreeTexture,
-                    GridPoint2 coordinates,
-                    TiledMapTileLayer groundLayer
-            )
-    {
-        super(coordinates, 0f);
+    public TreeGDX(Texture greenTreeTexture) {
         this.texture = greenTreeTexture;
         this.graphics = new TextureRegion(greenTreeTexture);
         this.rectangle = createBoundingRectangle(graphics);
-        this.placeOnLayer(groundLayer);
     }
 
-    public void placeOnLayer(TiledMapTileLayer groundLayer) {
-        moveRectangleAtTileCenter(groundLayer, rectangle, coordinates);
-    }
 
     @Override
     public Texture getTexture() {
@@ -64,22 +52,15 @@ public class Tree extends GameObjectAbt implements Drawable, GameObject {
         this.rectangle = rectangle;
     }
 
-    @Override
-    public Character getDrawableCharacter() {
-        return drawableCharacter;
-    }
 
-    public static Character getDrawableCharacterStatic() {
-        return drawableCharacter;
-    }
 
     @Override
     public void dispose() {
-        texture.dispose();
+
     }
 
     @Override
     public void draw(Batch batch) {
-        drawTextureRegionUnscaled(batch, graphics, rectangle, rotation);
+
     }
 }

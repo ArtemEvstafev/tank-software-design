@@ -2,9 +2,9 @@ package ru.mipt.bit.platformer.keys;
 
 import com.badlogic.gdx.Gdx;
 import ru.mipt.bit.platformer.levels.Level;
-import ru.mipt.bit.platformer.objects.AI;
-import ru.mipt.bit.platformer.objects.Movable;
-import ru.mipt.bit.platformer.objects.GameObject;
+import ru.mipt.bit.platformer.objects.interfaces.AI;
+import ru.mipt.bit.platformer.objects.interfaces.Movable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObject;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,7 +35,7 @@ public class MovementKey implements Key {
     }
 
     @Override
-    public void action() {
+    public void doAction() {
         for (Movable movable : movables) {
             if (!(movable instanceof AI) && movable.canMoveToDirection(direction, obstacles, level)) {
                 movable.move(direction);
