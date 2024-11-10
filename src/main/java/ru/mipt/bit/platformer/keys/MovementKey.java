@@ -5,6 +5,7 @@ import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.AI;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
+import ru.mipt.bit.platformer.objects.physical.InvisibleAmmunition;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,7 +38,7 @@ public class MovementKey implements Key {
     @Override
     public void doAction() {
         for (Movable movable : movables) {
-            if (!(movable instanceof AI)) {
+            if (!(movable instanceof AI || movable instanceof InvisibleAmmunition)) {
                 movable.changeMovementState(direction, obstacles, level);
             }
         }

@@ -7,10 +7,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import ru.mipt.bit.platformer.levels.DrawableLevel;
-import ru.mipt.bit.platformer.objects.interfaces.Destroyable;
-import ru.mipt.bit.platformer.objects.interfaces.Drawable;
-import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
-import ru.mipt.bit.platformer.objects.interfaces.Movable;
+import ru.mipt.bit.platformer.objects.interfaces.*;
 import ru.mipt.bit.platformer.objects.physical.ShowHealthBarDecorator;
 import ru.mipt.bit.platformer.util.*;
 import ru.mipt.bit.platformer.keys.*;
@@ -32,6 +29,7 @@ public class GameDesktopLauncher implements ApplicationListener {
     private final Collection<Drawable>       drawables = new HashSet<>();
     private final Collection<Movable>         movables = new HashSet<>();
     private final Collection<Destroyable> destroyables = new HashSet<>();
+    private final Collection<Shootable>     shootables = new HashSet<>();
 
     @Override
     public void create() {
@@ -40,7 +38,12 @@ public class GameDesktopLauncher implements ApplicationListener {
         batch     = gameLoader.getBatch();
         level     = gameLoader.getLevel();
         allObjects = gameLoader.getObjects();
-        for (GameObjectAbt gameObject : allObjects) {
+        distributeObjects(allObjects);
+    }
+
+    private void distributeObjects(Collection<GameObjectAbt> newObjects) {
+        allObjects.addAll(newObjects);
+        for (GameObjectAbt gameObject : newObjects) {
             if (gameObject instanceof Drawable) {
                 if (gameObject instanceof Destroyable) {
                     drawables.add(new ShowHealthBarDecorator<>((Drawable & Destroyable) gameObject));
@@ -54,6 +57,9 @@ public class GameDesktopLauncher implements ApplicationListener {
             if (gameObject instanceof Destroyable) {
                 destroyables.add((Destroyable) gameObject);
             }
+            if (gameObject instanceof Shootable) {
+                shootables.add((Shootable) gameObject);
+            }
         }
     }
 
@@ -66,6 +72,7 @@ public class GameDesktopLauncher implements ApplicationListener {
         // get time passed since the last render
         float deltaTime = Gdx.graphics.getDeltaTime();
 
+        Collection<GameObjectAbt> newObjects = new HashSet<>();
         KeyPressHandler.handleKeyPress
                 (
                         new MovementKey
@@ -103,8 +110,15 @@ public class GameDesktopLauncher implements ApplicationListener {
                         new HealthToggleKey
                                 (
                                         new int[]{L}
+                                ),
+                        new ShootKey
+                                (
+                                        new int[]{SPACE},
+                                        shootables,
+                                        newObjects
                                 )
                 );
+        distributeObjects(newObjects);
 
         Mover.move(deltaTime, movables, allObjects, level);
 

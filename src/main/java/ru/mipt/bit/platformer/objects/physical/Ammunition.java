@@ -15,7 +15,7 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.drawTextureRegionUnscaled
 
 public class Ammunition extends InvisibleAmmunition implements Drawable {
 
-    private final ObjectGDX ammunitionGDX;
+    private final AmmunitionGDX ammunitionGDX;
     protected final TileMovement tileMovement;
     private static final Character drawableCharacter = '.';
 
@@ -27,8 +27,7 @@ public class Ammunition extends InvisibleAmmunition implements Drawable {
             Direction direction,
             TileMovement tileMovement
     ) {
-        super(coordinates, movementSpeed, movementProgress);
-        this.rotation = direction.getRotation();
+        super(coordinates, movementSpeed, movementProgress, direction);
         this.ammunitionGDX = new AmmunitionGDX(texture);
         this.tileMovement = tileMovement;
     }
@@ -91,4 +90,5 @@ public class Ammunition extends InvisibleAmmunition implements Drawable {
         tileMovement.moveRectangleBetweenTileCenters(ammunitionGDX.getRectangle(), coordinates, destinationCoordinates, movementProgress);
         super.move(deltaTime);
     }
+
 }

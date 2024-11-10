@@ -84,7 +84,7 @@ public class RandomGeneratedGameLoader implements GameLoader {
         allObjects.add(tankPlayer);
         allObjects.add(tankAI);
 
-        tankAIGenerator.generate( 3, allObjects);
+        tankAIGenerator.generate( 1, allObjects);
           treeGenerator.generate(20, allObjects);
 
         Collection<Drawable> drawables = new HashSet<>();
