@@ -5,7 +5,6 @@ import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.AI;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
-import ru.mipt.bit.platformer.objects.interfaces.GameObject;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,7 +12,7 @@ import java.util.Collection;
 public class MovementKey implements Key {
 
     protected final Collection<? extends GameObjectAbt> obstacles;
-    private   final Collection<? extends Movable> movables;
+    private final Collection<? extends Movable> movables;
     private final int[] keys;
     private final Direction direction;
     private final Level level;
@@ -24,7 +23,7 @@ public class MovementKey implements Key {
                        Direction direction,
                        Level level) {
         this.obstacles = obstacles;
-        this.movables  =  movables;
+        this.movables = movables;
         this.keys = keys;
         this.direction = direction;
         this.level = level;
@@ -38,8 +37,8 @@ public class MovementKey implements Key {
     @Override
     public void doAction() {
         for (Movable movable : movables) {
-            if (!(movable instanceof AI) && movable.canMoveToDirection(direction, obstacles, level)) {
-                movable.move(direction);
+            if (!(movable instanceof AI)) {
+                movable.changeMovementState(direction, obstacles, level);
             }
         }
     }

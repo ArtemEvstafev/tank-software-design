@@ -17,9 +17,9 @@ public interface Movable extends GameObject {
 
     void changeDestinationCoordinates(GridPoint2 direction);
 
-    void changeMovementState(float deltaTime);
+    void move(float deltaTime);
 
-    void move(Direction direction);
+    void changeMovementState(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level);
 
     boolean canMoveToDirection(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level);
 }

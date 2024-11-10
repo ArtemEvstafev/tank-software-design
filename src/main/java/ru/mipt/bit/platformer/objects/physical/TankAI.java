@@ -4,10 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.generators.IntegerGenerator;
 import ru.mipt.bit.platformer.keys.Direction;
+import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.AI;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
 import ru.mipt.bit.platformer.util.TileMovement;
+
+import java.util.Collection;
 
 public class TankAI extends Tank implements AI {
     private final IntegerGenerator integerGenerator;
@@ -52,5 +56,4 @@ public class TankAI extends Tank implements AI {
     public Direction generateDirection() {
         return Direction.values()[integerGenerator.generate(0, 3)];
     }
-
 }

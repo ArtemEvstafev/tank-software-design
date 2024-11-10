@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.objects.GDX.AmmunitionGDX;
-import ru.mipt.bit.platformer.objects.GDX.TankGDX;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 import ru.mipt.bit.platformer.util.TileMovement;
@@ -88,8 +87,8 @@ public class Ammunition extends InvisibleAmmunition implements Drawable {
     }
 
     @Override
-    public void changeMovementState(float deltaTime) {
+    public void move(float deltaTime) {
         tileMovement.moveRectangleBetweenTileCenters(ammunitionGDX.getRectangle(), coordinates, destinationCoordinates, movementProgress);
-        super.changeMovementState(deltaTime);
+        super.move(deltaTime);
     }
 }

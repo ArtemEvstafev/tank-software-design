@@ -68,13 +68,15 @@ public class Ghost extends GameObjectAbt implements Movable {
     }
 
     @Override
-    public void move(Direction direction) {
-        changeDestinationCoordinates(direction.getDirection());
-        setMovementProgress(0f);
+    public void changeMovementState(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level) {
+        if(canMoveToDirection(direction, obstacles, level)) {
+            changeDestinationCoordinates(direction.getDirection());
+            setMovementProgress(0f);
+        }
     }
 
     @Override
-    public void changeMovementState(float deltaTime) {
+    public void move(float deltaTime) {
         setMovementProgress(continueProgress(movementProgress, deltaTime, movementSpeed));
         if (isEqual(movementProgress, 1f)) {
             setCoordinates(destinationCoordinates);

@@ -18,17 +18,14 @@ public class Mover {
     }
 
     public static void move(float deltaTime,
-                            Collection<Movable> movables,
+                            Collection<? extends Movable> movables,
                             Collection<? extends GameObjectAbt> obstacles,
                             Level level) {
         for (Movable movable : movables) {
             if (movable instanceof AI ai) {
-                Direction direction = ai.generateDirection();
-                if (movable.canMoveToDirection(direction, obstacles, level)) {
-                    movable.move(direction);
-                }
+                movable.changeMovementState(ai.generateDirection(), obstacles, level);
             }
-            movable.changeMovementState(deltaTime);
+            movable.move(deltaTime);
         }
     }
 

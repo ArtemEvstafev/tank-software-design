@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.objects.GDX.TankGDX;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
-import ru.mipt.bit.platformer.objects.interfaces.Movable;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 
@@ -87,8 +86,8 @@ public class Tank extends Ghost implements Drawable {
     }
 
     @Override
-    public void changeMovementState(float deltaTime) {
+    public void move(float deltaTime) {
         tileMovement.moveRectangleBetweenTileCenters(tankGDX.getRectangle(), coordinates, destinationCoordinates, movementProgress);
-        super.changeMovementState(deltaTime);
+        super.move(deltaTime);
     }
 }
