@@ -10,10 +10,4 @@ public interface GameObject {
     void setRotation(float rotation);
 
     float getRotation();
-
-    @Override
-    boolean equals(Object o);
-
-    @Override
-    int hashCode();
 }

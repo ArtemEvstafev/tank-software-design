@@ -3,6 +3,7 @@ package ru.mipt.bit.platformer.keys;
 import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.levels.BorderLevel;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.physical.Ghost;
 import ru.mipt.bit.platformer.objects.interfaces.GameObject;
 import ru.mipt.bit.platformer.objects.physical.Wall;
@@ -26,7 +27,7 @@ class MoveRightTest {
                         1f
                 );
 
-        List<GameObject>   objects = new ArrayList<>(List.of( wall));
+        List<GameObjectAbt>   objects = new ArrayList<>(List.of( wall));
         assertFalse(ghost.canMoveToDirection(Direction.RIGHT, objects, new BorderLevel(7, 5)));
     }
 
@@ -43,7 +44,7 @@ class MoveRightTest {
                         1f
                 );
 
-        List<GameObject>   objects = new ArrayList<>(List.of( wall));
+        List<GameObjectAbt>   objects = new ArrayList<>(List.of( wall));
         assertTrue(ghost.canMoveToDirection(Direction.RIGHT, objects, new BorderLevel(7, 5)));
     }
 }

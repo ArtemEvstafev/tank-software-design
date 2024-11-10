@@ -10,19 +10,19 @@ import java.util.List;
 import static java.lang.Math.min;
 
 public class TankAIGenerator implements ObjectGenerator<TankAI> {
-    final private List<String> textures;
-    final private CoordinatesGenerator coordinatesGenerator;
-    final private List<Float> movementSpeeds;
-    final private float movementProgress;
-    final private IntegerGenerator integerGenerator;
-    final private List<Integer> rotations;
-    final private TileMovement tileMovement;
+    final protected List<Texture> textures;
+    final protected CoordinatesGenerator coordinatesGenerator;
+    final protected List<Float> movementSpeeds;
+    final protected float movementProgress;
+    final protected IntegerGenerator integerGenerator;
+    final protected List<Float> rotations;
+    final protected TileMovement tileMovement;
 
-    public TankAIGenerator(List<String> textures,
-                           CoordinatesGenerator coordinatesGenerator,
+    public TankAIGenerator(CoordinatesGenerator coordinatesGenerator,
+                           List<Texture> textures,
                            List<Float> movementSpeeds,
                            float movementProgress,
-                           List<Integer> rotations,
+                           List<Float> rotations,
                            TileMovement tileMovement,
                            IntegerGenerator integerGenerator) {
 
@@ -35,21 +35,33 @@ public class TankAIGenerator implements ObjectGenerator<TankAI> {
         this.tileMovement = tileMovement;
     }
 
-    public TankAIGenerator(List<String> textures,
-                           CoordinatesGenerator coordinatesGenerator,
+    public TankAIGenerator(CoordinatesGenerator coordinatesGenerator,
+                           List<Texture> textures,
                            List<Float> movementSpeeds,
                            float movementProgress,
-                           List<Integer> rotations,
+                           List<Float> rotations,
                            TileMovement tileMovement) {
 
         this(
-                textures,
                 coordinatesGenerator,
+                textures,
                 movementSpeeds,
                 movementProgress,
                 rotations,
                 tileMovement,
-                coordinatesGenerator.getIntegerGenerator());
+                coordinatesGenerator.getIntegerGenerator()
+        );
+    }
+
+    public TankAIGenerator(CoordinatesGenerator coordinatesGenerator, TankAI tankAI) {
+        this(
+                coordinatesGenerator,
+                List.of(tankAI.getTexture()),
+                List.of(tankAI.getMovementSpeed()),
+                tankAI.getMovementProgress(),
+                List.of(tankAI.getRotation()),
+                tankAI.getTileMovement(),
+                tankAI.getIntegerGenerator());
     }
 
     @Override
@@ -65,17 +77,17 @@ public class TankAIGenerator implements ObjectGenerator<TankAI> {
     public TankAI generate() {
         return new TankAI
                 (
-                        new Texture(textures.get(generateIndex())),
+                        textures.get(generateIndex(textures.size())),
                         coordinatesGenerator.generate(),
-                        movementSpeeds.get(generateIndex()),
-                        1f,
-                        rotations.get(generateIndex()),
+                        movementSpeeds.get(generateIndex(movementSpeeds.size())),
+                        movementProgress,
+                        rotations.get(generateIndex(rotations.size())),
                         tileMovement,
                         integerGenerator
                 );
     }
 
-    int generateIndex(){
-        return integerGenerator.generate(0, textures.size() - 1);
-    };
+    int generateIndex(int size) {
+        return integerGenerator.generate(0, size - 1);
+    }
 }

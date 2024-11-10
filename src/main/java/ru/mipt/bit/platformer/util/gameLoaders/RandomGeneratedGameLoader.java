@@ -8,14 +8,8 @@ import com.badlogic.gdx.math.Interpolation;
 import ru.mipt.bit.platformer.generators.*;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.levels.EmptyDrawableLevel;
-import ru.mipt.bit.platformer.objects.interfaces.Drawable;
-import ru.mipt.bit.platformer.objects.interfaces.GameObject;
-import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
-import ru.mipt.bit.platformer.objects.interfaces.Movable;
-import ru.mipt.bit.platformer.objects.physical.MakeDrawableDestroyableDecorator;
-import ru.mipt.bit.platformer.objects.physical.Tank;
-import ru.mipt.bit.platformer.objects.physical.TankAI;
-import ru.mipt.bit.platformer.objects.physical.Tree;
+import ru.mipt.bit.platformer.objects.interfaces.*;
+import ru.mipt.bit.platformer.objects.physical.*;
 import ru.mipt.bit.platformer.util.Mover;
 import ru.mipt.bit.platformer.util.TileMovement;
 import ru.mipt.bit.platformer.util.files.FileSaver;
@@ -27,11 +21,10 @@ import java.util.List;
 
 public class RandomGeneratedGameLoader implements GameLoader {
 
-    private Batch batch;
-    private DrawableLevel level;
+    private final Batch batch;
+    private final DrawableLevel level;
 
-    private Collection<Drawable> drawables = new HashSet<>();
-    private Collection<Movable>   movables = new HashSet<>();
+    private final Collection<GameObjectAbt> allObjects = new HashSet<>();
 
     public RandomGeneratedGameLoader() {
         batch = new SpriteBatch();
@@ -48,14 +41,15 @@ public class RandomGeneratedGameLoader implements GameLoader {
                         level.getWidth()
                 );
 
-        final ObjectGenerator<TankAI> tankAIGenerator = new TankAIGenerator(
-                List.of("images/tank_blue.png"),
+        final ObjectGenerator<TankAI> tankAIGenerator = new DestroyableTankAIGenerator(
                 coordinatesGenerator,
+                List.of(new Texture("images/tank_blue.png")),
                 List.of(0.4f),
                 1f,
-                List.of(0),
+                List.of(0f),
                 mover.getTileMovement(),
-                simpleIntegerGenerator
+                simpleIntegerGenerator,
+                List.of(10, 50, 90)
         );
 
         final ObjectGenerator<Tree> treeGenerator = new TreeGenerator(
@@ -75,7 +69,7 @@ public class RandomGeneratedGameLoader implements GameLoader {
                 );
 
         final TankAI tankAI =
-                new TankAI
+                new DestroyableTankAI
                 (
                         new Texture("images/tank_blue.png"),
                         coordinatesGenerator.generate(),
@@ -83,25 +77,20 @@ public class RandomGeneratedGameLoader implements GameLoader {
                         1f,
                         0,
                         mover.getTileMovement(),
-                        simpleIntegerGenerator
+                        simpleIntegerGenerator,
+                        60
                 );
 
-        Collection<GameObjectAbt> allObjects = new HashSet<>();
-
-        drawables.add(new MakeDrawableDestroyableDecorator(tankAI, 37));
-        movables.add(tankAI);
-        movables.add(tankPlayer);
-        drawables.add(tankPlayer);
+        allObjects.add(tankPlayer);
+        allObjects.add(tankAI);
 
         tankAIGenerator.generate( 3, allObjects);
           treeGenerator.generate(20, allObjects);
 
-        for (GameObjectAbt allObject : allObjects) {
-            if (allObject instanceof Movable) {
-                movables.add((Movable) allObject);
-            }
-            if (allObject instanceof Drawable) {
-                drawables.add((Drawable) allObject);
+        Collection<Drawable> drawables = new HashSet<>();
+        for (GameObjectAbt gameObject : allObjects) {
+            if (gameObject instanceof Drawable) {
+                drawables.add((Drawable) gameObject);
             }
         }
 
@@ -120,12 +109,7 @@ public class RandomGeneratedGameLoader implements GameLoader {
     }
 
     @Override
-    public Collection<Drawable> getDrawables() {
-        return drawables;
-    }
-
-    @Override
-    public Collection<Movable> getMovables() {
-        return movables;
+    public Collection<GameObjectAbt> getObjects() {
+        return allObjects;
     }
 }

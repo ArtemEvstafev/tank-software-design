@@ -1,4 +1,5 @@
-__________
+__________            movable.setMovementProgress(0f);
+
 __________
 ____AA____
 ____TT____

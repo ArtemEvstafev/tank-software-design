@@ -17,31 +17,19 @@ public class FromFileGameLoader implements GameLoader {
 
     private final Batch batch;
     private final DrawableLevel level;
-    private final Collection<Drawable> drawables = new HashSet<>();
-    private final Collection<Movable>   movables = new HashSet<>();
-
+    Collection<GameObjectAbt> allObjects = new HashSet<>();
 
     public FromFileGameLoader() {
         batch = new SpriteBatch();
 
-        Collection<GameObjectAbt> objects = new HashSet<>();
         level = new FromFileDrawableLevel
                 (
                         new TmxMapLoader().load("level.tmx"),
                         batch,
                         new TxtParser(),
                         "src/main/res/level.txt",
-                        objects
+                        allObjects
                 );
-
-        for (GameObjectAbt object : objects) {
-            if (object instanceof Movable) {
-                movables.add((Movable) object);
-            }
-            if (object instanceof Drawable) {
-                drawables.add((Drawable) object);
-            }
-        }
     }
 
     @Override
@@ -53,14 +41,9 @@ public class FromFileGameLoader implements GameLoader {
     public DrawableLevel getLevel() {
         return level;
     }
-
     @Override
-    public Collection<Drawable> getDrawables() {
-        return drawables;
+    public Collection<GameObjectAbt> getObjects() {
+        return allObjects;
     }
 
-    @Override
-    public Collection<Movable> getMovables() {
-        return movables;
-    }
 }

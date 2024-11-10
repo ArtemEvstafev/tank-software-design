@@ -21,5 +21,5 @@ public interface Movable extends GameObject {
 
     void move(Direction direction);
 
-    boolean canMoveToDirection(Direction direction, Collection<? extends GameObject> obstacles, Level level);
+    boolean canMoveToDirection(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level);
 }

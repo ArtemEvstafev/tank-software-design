@@ -1,6 +1,5 @@
 package ru.mipt.bit.platformer.objects.GDX;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,18 +9,17 @@ import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.createBoundingRectangle;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.drawTextureRegionUnscaled;
 
-public class TreeGDX implements ObjectGDX {
+public class AmmunitionGDX implements ObjectGDX{
 
-    private Texture texture;
-    private TextureRegion graphics;
-    private Rectangle rectangle;
+    protected Texture texture;
+    protected TextureRegion graphics;
+    protected Rectangle rectangle;
 
-    public TreeGDX(Texture greenTreeTexture) {
-        this.texture = greenTreeTexture;
-        this.graphics = new TextureRegion(greenTreeTexture);
+    public AmmunitionGDX(Texture texture) {
+        this.texture = texture;
+        this.graphics = new TextureRegion(texture);
         this.rectangle = createBoundingRectangle(graphics);
     }
-
 
     @Override
     public Texture getTexture() {
@@ -60,6 +58,6 @@ public class TreeGDX implements ObjectGDX {
 
     @Override
     public void draw(Batch batch) {
-        drawTextureRegionUnscaled(batch, graphics, rectangle, 0);
+        drawTextureRegionUnscaled(batch, graphics, rectangle, 0f);
     }
 }

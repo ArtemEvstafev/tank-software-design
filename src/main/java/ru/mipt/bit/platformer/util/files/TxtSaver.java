@@ -3,6 +3,8 @@ package ru.mipt.bit.platformer.util.files;
 import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObject;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.physical.Tank;
 import ru.mipt.bit.platformer.objects.physical.TankAI;
 import ru.mipt.bit.platformer.objects.physical.Tree;
@@ -41,15 +43,16 @@ public class TxtSaver implements FileSaver {
     }
 
     private void drawObjects(DrawableLevel level, Collection<? extends Drawable> drawables) {
+        GridPoint2 coordinates;
         for (Drawable drawable : drawables) {
-            GridPoint2 coordinates = drawable.getCoordinates();
+            coordinates = drawable.getCoordinates();
             int index = coordinates.x + level.getWidth() * coordinates.y;
-            if (drawable instanceof TankAI tankAI) {
+                   if (drawable instanceof TankAI tankAI) {
                 field.set(index, CharToDrawableConverter.getCharFromDrawable(tankAI));
             } else if (drawable instanceof Tree tree) {
-                field.set(index, CharToDrawableConverter.getCharFromDrawable(tree));
+                field.set(index, CharToDrawableConverter.getCharFromDrawable(  tree));
             } else if (drawable instanceof Tank tank) {
-                field.set(index, CharToDrawableConverter.getCharFromDrawable(tank));
+                field.set(index, CharToDrawableConverter.getCharFromDrawable(  tank));
             }
         }
     }

@@ -9,11 +9,9 @@ import java.util.Collection;
 
 public class HealthToggleKey implements Key {
 
-    protected final Collection<Drawable> drawables;
     private final int[] keys;
 
-    public HealthToggleKey(Collection<Drawable> drawables, int[] keys) {
-        this.drawables = drawables;
+    public HealthToggleKey(int[] keys) {
         this.keys = keys;
     }
 

@@ -3,6 +3,7 @@ package ru.mipt.bit.platformer.keys;
 import com.badlogic.gdx.Gdx;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.AI;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
 import ru.mipt.bit.platformer.objects.interfaces.GameObject;
 
@@ -11,13 +12,13 @@ import java.util.Collection;
 
 public class MovementKey implements Key {
 
-    protected final Collection<? extends GameObject> obstacles;
-    private   final Collection<Movable> movables;
+    protected final Collection<? extends GameObjectAbt> obstacles;
+    private   final Collection<? extends Movable> movables;
     private final int[] keys;
     private final Direction direction;
     private final Level level;
 
-    public MovementKey(Collection<? extends GameObject> obstacles,
+    public MovementKey(Collection<? extends GameObjectAbt> obstacles,
                        Collection<Movable> movables,
                        int[] keys,
                        Direction direction,

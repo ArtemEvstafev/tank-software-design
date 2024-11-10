@@ -18,11 +18,15 @@ public class Ghost extends GameObjectAbt implements Movable {
     protected final GridPoint2 destinationCoordinates;
     protected float movementProgress;
 
-    public Ghost(GridPoint2 coordinates, float movementSpeed, float movementProgress) {
-        super(coordinates, 0f);
+    public Ghost(GridPoint2 coordinates, float rotation, float movementSpeed, float movementProgress) {
+        super(coordinates, rotation);
         this.movementProgress = movementProgress;
         this.movementSpeed = movementSpeed;
         destinationCoordinates = new GridPoint2(coordinates);
+    }
+
+    public Ghost(GridPoint2 coordinates, float movementSpeed, float movementProgress) {
+        this(coordinates, 0f, movementSpeed, movementProgress);
     }
 
     @Override
@@ -52,7 +56,7 @@ public class Ghost extends GameObjectAbt implements Movable {
     }
 
     @Override
-    public boolean canMoveToDirection(Direction direction, Collection<? extends GameObject> obstacles, Level level) {
+    public boolean canMoveToDirection(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level) {
         canRotateToDirection(direction);
         return isEqual(movementProgress, 1f) && !existCollisions(direction, obstacles) && !outOfBorders(direction, level);
     }

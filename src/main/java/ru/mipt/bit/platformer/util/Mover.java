@@ -4,6 +4,7 @@ import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.AI;
 import ru.mipt.bit.platformer.objects.interfaces.GameObject;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
 
 import java.util.Collection;
@@ -18,7 +19,7 @@ public class Mover {
 
     public static void move(float deltaTime,
                             Collection<Movable> movables,
-                            Collection<? extends GameObject> obstacles,
+                            Collection<? extends GameObjectAbt> obstacles,
                             Level level) {
         for (Movable movable : movables) {
             if (movable instanceof AI ai) {

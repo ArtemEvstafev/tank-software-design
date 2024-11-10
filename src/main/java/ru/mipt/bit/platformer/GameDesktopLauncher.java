@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.objects.interfaces.Destroyable;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
+import ru.mipt.bit.platformer.objects.physical.ShowHealthBarDecorator;
 import ru.mipt.bit.platformer.util.*;
 import ru.mipt.bit.platformer.keys.*;
 import ru.mipt.bit.platformer.util.gameLoaders.GameLoader;
@@ -26,9 +28,10 @@ public class GameDesktopLauncher implements ApplicationListener {
     private Batch batch = null;
     private DrawableLevel level = null;
 
-    private Collection<Drawable>       drawables = new HashSet<>();
-    private Collection<Movable>         movables = new HashSet<>();
-    private Collection<Destroyable> destroyables = new HashSet<>();
+    private       Collection<GameObjectAbt> allObjects = new HashSet<>();
+    private final Collection<Drawable>       drawables = new HashSet<>();
+    private final Collection<Movable>         movables = new HashSet<>();
+    private final Collection<Destroyable> destroyables = new HashSet<>();
 
     @Override
     public void create() {
@@ -36,8 +39,22 @@ public class GameDesktopLauncher implements ApplicationListener {
 //        GameLoader gameLoader = new FromFileGameLoader();
         batch     = gameLoader.getBatch();
         level     = gameLoader.getLevel();
-        drawables = gameLoader.getDrawables();
-        movables  = gameLoader.getMovables();
+        allObjects = gameLoader.getObjects();
+        for (GameObjectAbt gameObject : allObjects) {
+            if (gameObject instanceof Drawable) {
+                if (gameObject instanceof Destroyable) {
+                    drawables.add(new ShowHealthBarDecorator<>((Drawable & Destroyable) gameObject));
+                } else {
+                    drawables.add((Drawable) gameObject);
+                }
+            }
+            if (gameObject instanceof Movable) {
+                movables.add((Movable) gameObject);
+            }
+            if (gameObject instanceof Destroyable) {
+                destroyables.add((Destroyable) gameObject);
+            }
+        }
     }
 
     @Override
@@ -53,7 +70,7 @@ public class GameDesktopLauncher implements ApplicationListener {
                 (
                         new MovementKey
                                 (
-                                        drawables,
+                                        allObjects,
                                         movables,
                                         new int[]{UP, W},
                                         Direction.UP,
@@ -61,7 +78,7 @@ public class GameDesktopLauncher implements ApplicationListener {
                                 ),
                         new MovementKey
                                 (
-                                        drawables,
+                                        allObjects,
                                         movables,
                                         new int[]{DOWN, S},
                                         Direction.DOWN,
@@ -69,7 +86,7 @@ public class GameDesktopLauncher implements ApplicationListener {
                                 ),
                         new MovementKey
                                 (
-                                        drawables,
+                                        allObjects,
                                         movables,
                                         new int[]{LEFT, A},
                                         Direction.LEFT,
@@ -77,7 +94,7 @@ public class GameDesktopLauncher implements ApplicationListener {
                                 ),
                         new MovementKey
                                 (
-                                        drawables,
+                                        allObjects,
                                         movables,
                                         new int[]{RIGHT, D},
                                         Direction.RIGHT,
@@ -85,12 +102,11 @@ public class GameDesktopLauncher implements ApplicationListener {
                                 ),
                         new HealthToggleKey
                                 (
-                                        drawables,
                                         new int[]{L}
                                 )
                 );
 
-        Mover.move(deltaTime, movables, drawables, level);
+        Mover.move(deltaTime, movables, allObjects, level);
 
         // render each tile of the level
         level.render();

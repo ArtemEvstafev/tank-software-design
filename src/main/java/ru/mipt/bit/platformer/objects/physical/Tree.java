@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.objects.GDX.TreeGDX;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.objects.interfaces.GameObject;
@@ -13,9 +14,9 @@ import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
-public class Tree extends GameObjectAbt implements Drawable, GameObject {
+public class Tree extends GameObjectAbt implements Drawable {
 
-    private TreeGDX treeGDX;
+    private final TreeGDX treeGDX;
     private static final Character drawableCharacter = 'T';
 
     public Tree

@@ -9,7 +9,7 @@ import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
 import ru.mipt.bit.platformer.util.TileMovement;
 
-public class TankAI extends Tank implements AI, Movable, Drawable {
+public class TankAI extends Tank implements AI {
     private final IntegerGenerator integerGenerator;
     private static final Character drawableCharacter = 'A';
 
@@ -52,4 +52,5 @@ public class TankAI extends Tank implements AI, Movable, Drawable {
     public Direction generateDirection() {
         return Direction.values()[integerGenerator.generate(0, 3)];
     }
+
 }

@@ -5,40 +5,35 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.objects.interfaces.Destroyable;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
-import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 import ru.mipt.bit.platformer.util.GdxGameUtils;
 import ru.mipt.bit.platformer.util.HealthBarSetting;
 
-public class MakeDrawableDestroyableDecorator extends TankAI implements Drawable, Destroyable {
+public class ShowHealthBarDecorator<T extends Drawable & Destroyable> extends GameObjectAbt implements Drawable, Destroyable {
 
-    Drawable wrapped;
-    private int health;
+    T wrapped;
 
-    public MakeDrawableDestroyableDecorator(TankAI wrapped,
-                                            int health) {
-        super(wrapped);
+    public ShowHealthBarDecorator(T wrapped) {
+        super(wrapped.getCoordinates(), wrapped.getRotation());
         this.wrapped = wrapped;
-        this.health = health;
     }
 
     @Override
     public void setHealth(int health) {
-        this.health = health;
+        wrapped.setHealth(health);
     }
 
     @Override
     public int getHealth() {
-        return this.health;
+        return wrapped.getHealth();
     }
 
     @Override
     public void destroy() {
-        setHealth(0);
+        wrapped.destroy();
     }
 
     @Override
@@ -78,24 +73,24 @@ public class MakeDrawableDestroyableDecorator extends TankAI implements Drawable
 
     @Override
     public void dispose() {
-
+        wrapped.dispose();
     }
 
     @Override
     public void draw(Batch batch) {
         wrapped.draw(batch);
-        if (HealthBarSetting.showHealthBar == true) {
-            renderHealthbar(batch);
+        if (HealthBarSetting.showHealthBar) {
+            renderHealthBar(batch);
         }
     }
 
-    private void renderHealthbar(Batch batch) {
-        var healthbarTexture = getHealthbarTexture(health);
+    private void renderHealthBar(Batch batch) {
+        var healthbarTexture = getHealthBarTexture(wrapped.getHealth());
         var rectangle = createRectangle();
         GdxGameUtils.drawTextureRegionUnscaled(batch, healthbarTexture, rectangle, 0f);
     }
 
-    private TextureRegion getHealthbarTexture(float relativeHealth) {
+    private TextureRegion getHealthBarTexture(float relativeHealth) {
         var pixmap = new Pixmap(90, 20, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.RED);
         pixmap.fillRectangle(0, 0, 90, 20);

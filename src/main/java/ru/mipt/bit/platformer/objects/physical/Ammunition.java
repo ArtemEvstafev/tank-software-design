@@ -5,31 +5,32 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.keys.Direction;
+import ru.mipt.bit.platformer.objects.GDX.AmmunitionGDX;
 import ru.mipt.bit.platformer.objects.GDX.TankGDX;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
-import ru.mipt.bit.platformer.objects.interfaces.Movable;
+import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 import ru.mipt.bit.platformer.util.TileMovement;
 
+import static ru.mipt.bit.platformer.util.GdxGameUtils.drawTextureRegionUnscaled;
 
-import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
+public class Ammunition extends InvisibleAmmunition implements Drawable {
 
-public class Tank extends Ghost implements Drawable {
-
-    protected TankGDX tankGDX;
+    private final ObjectGDX ammunitionGDX;
     protected final TileMovement tileMovement;
-    private static final Character drawableCharacter = 'X';
+    private static final Character drawableCharacter = '.';
 
-    public Tank
-            (
-                    Texture texture,
-                    GridPoint2 coordinates,
-                    float movementSpeed,
-                    float movementProgress,
-                    float rotation,
-                    TileMovement tileMovement
-            ) {
-        super(coordinates, rotation, movementSpeed, movementProgress);
-        this.tankGDX = new TankGDX(texture);
+    public Ammunition(
+            Texture texture,
+            GridPoint2 coordinates,
+            float movementSpeed,
+            float movementProgress,
+            Direction direction,
+            TileMovement tileMovement
+    ) {
+        super(coordinates, movementSpeed, movementProgress);
+        this.rotation = direction.getRotation();
+        this.ammunitionGDX = new AmmunitionGDX(texture);
         this.tileMovement = tileMovement;
     }
 
@@ -39,32 +40,32 @@ public class Tank extends Ghost implements Drawable {
 
     @Override
     public Texture getTexture() {
-        return tankGDX.getTexture();
+        return ammunitionGDX.getTexture();
     }
 
     @Override
     public void setTexture(Texture texture) {
-        tankGDX.setTexture(texture);
+        ammunitionGDX.setTexture(texture);
     }
 
     @Override
     public TextureRegion getGraphics() {
-        return tankGDX.getGraphics();
+        return ammunitionGDX.getGraphics();
     }
 
     @Override
     public void setGraphics(TextureRegion graphics) {
-        tankGDX.setGraphics(graphics);
+        ammunitionGDX.setGraphics(graphics);
     }
 
     @Override
     public Rectangle getRectangle() {
-        return tankGDX.getRectangle();
+        return ammunitionGDX.getRectangle();
     }
 
     @Override
     public void setRectangle(Rectangle rectangle) {
-        tankGDX.setRectangle(rectangle);
+        ammunitionGDX.setRectangle(rectangle);
     }
 
     @Override
@@ -74,12 +75,12 @@ public class Tank extends Ghost implements Drawable {
 
     @Override
     public void dispose() {
-        tankGDX.dispose();
+        ammunitionGDX.dispose();
     }
 
     @Override
     public void draw(Batch batch) {
-        drawTextureRegionUnscaled(batch, tankGDX.getGraphics(), tankGDX.getRectangle(), rotation);
+        drawTextureRegionUnscaled(batch, ammunitionGDX.getGraphics(), ammunitionGDX.getRectangle(), rotation);
     }
 
     public static Character getDrawableCharacterStatic() {
@@ -88,7 +89,7 @@ public class Tank extends Ghost implements Drawable {
 
     @Override
     public void changeMovementState(float deltaTime) {
-        tileMovement.moveRectangleBetweenTileCenters(tankGDX.getRectangle(), coordinates, destinationCoordinates, movementProgress);
+        tileMovement.moveRectangleBetweenTileCenters(ammunitionGDX.getRectangle(), coordinates, destinationCoordinates, movementProgress);
         super.changeMovementState(deltaTime);
     }
 }
