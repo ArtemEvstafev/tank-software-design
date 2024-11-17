@@ -6,11 +6,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.keys.Direction;
+import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.GDX.TankGDX;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Shootable;
 import ru.mipt.bit.platformer.util.TileMovement;
 
+
+import java.util.Collection;
 
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
@@ -88,9 +92,9 @@ public class Tank extends Ghost implements Drawable, Shootable {
     }
 
     @Override
-    public void move(float deltaTime) {
+    public void move(float deltaTime, Collection<? extends GameObjectAbt> obstacles, Level level) {
         tileMovement.moveRectangleBetweenTileCenters(tankGDX.getRectangle(), coordinates, destinationCoordinates, movementProgress);
-        super.move(deltaTime);
+        super.move(deltaTime, obstacles, level);
     }
 
     @Override
@@ -107,7 +111,7 @@ public class Tank extends Ghost implements Drawable, Shootable {
         }
         return new Ammunition(new Texture("/home/artem/Repositories/tank-software-design/src/main/resources/images/3uzvaykb5cro_64.png"),
                 coordinates.cpy().add(directionToShoot.getDirection()),
-                1.f,
+                0.04f,
                 1f,
                 directionToShoot,
                 tileMovement,

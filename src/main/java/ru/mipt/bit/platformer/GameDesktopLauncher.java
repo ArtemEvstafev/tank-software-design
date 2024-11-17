@@ -52,29 +52,25 @@ public class GameDesktopLauncher implements ApplicationListener {
                                 (
                                         allObjects,
                                         new int[]{UP, W},
-                                        Direction.UP,
-                                        level
+                                        Direction.UP
                                 ),
                         new MovementKey
                                 (
                                         allObjects,
                                         new int[]{DOWN, S},
-                                        Direction.DOWN,
-                                        level
+                                        Direction.DOWN
                                 ),
                         new MovementKey
                                 (
                                         allObjects,
                                         new int[]{LEFT, A},
-                                        Direction.LEFT,
-                                        level
+                                        Direction.LEFT
                                 ),
                         new MovementKey
                                 (
                                         allObjects,
                                         new int[]{RIGHT, D},
-                                        Direction.RIGHT,
-                                        level
+                                        Direction.RIGHT
                                 ),
                         new HealthToggleKey
                                 (

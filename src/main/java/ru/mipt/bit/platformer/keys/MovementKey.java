@@ -15,16 +15,13 @@ public class MovementKey implements Key {
     protected final Collection<? extends GameObjectAbt> objects;
     private final int[] keys;
     private final Direction direction;
-    private final Level level;
 
     public MovementKey(Collection<? extends GameObjectAbt> objects,
                        int[] keys,
-                       Direction direction,
-                       Level level) {
+                       Direction direction) {
         this.objects = objects;
         this.keys = keys;
         this.direction = direction;
-        this.level = level;
     }
 
     @Override
@@ -38,7 +35,6 @@ public class MovementKey implements Key {
             if (objectAbt instanceof Movable movable) {
                 if (!(movable instanceof AI || movable instanceof InvisibleAmmunition)) {
                     movable.setDirection(direction);
-//                    movable.changeMovementState(direction, objects, level);
                 }
             }
         }

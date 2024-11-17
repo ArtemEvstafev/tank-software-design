@@ -26,27 +26,25 @@ public class Mover {
                                                  Level level,
                                                  Collection<GameObjectAbt> deleteObjects) {
 
-        Collection<GameObjectAbt> obstaclesCopy = new HashSet<>(obstacles);
+        Collection<GameObjectAbt> obstaclesCopy = new HashSet<>();
         for (GameObjectAbt obstacle : obstacles) {
             if (obstacle instanceof Movable movable) {
-//                if (movable instanceof AI ai) {
-//                    movable.changeMovementState(ai.generateDirection(), obstacles, level);
-//                }
-//                if (movable instanceof InvisibleAmmunition amo) {
-//                    if (amo.existCollisions(amo.getDirection(), obstacles) || amo.outOfBorders(amo.getDirection(), level)) {
-//                        deleteObjects.add(amo);
-//                        continue;
-//                    }
-//                    movable.changeMovementState(amo.getDirection(), obstacles, level);
-//                }
-                Direction direction = movable.getDirection();
-                if (!(direction == null)) {
-                    movable.setDirection(direction);
-                    movable.changeMovementState(direction, obstacles, level);
-                    movable.move(deltaTime);
-                }
+                movable.move(deltaTime, obstacles, level);
             }
-            obstaclesCopy.add(obstacle);
+            if (!(obstacle instanceof InvisibleAmmunition)) {
+                obstaclesCopy.add(obstacle);
+            }
+        }
+        for (GameObjectAbt obstacle : obstacles) {
+
+            if (obstacle instanceof InvisibleAmmunition amo) {
+                //                if (!amo.canMove(amo.getDirection(), obstacles, level)) {
+                if (amo.existCollisions(amo.getDirection(), obstacles) || amo.outOfBorders(amo.getDirection(), level)) {
+//                    deleteObjects.add(amo);
+                    continue;
+                }
+                obstaclesCopy.add(amo);
+            }
         }
         return obstaclesCopy;
     }

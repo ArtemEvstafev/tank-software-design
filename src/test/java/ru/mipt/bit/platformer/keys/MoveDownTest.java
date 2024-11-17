@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.levels.BorderLevel;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.physical.Ghost;
-import ru.mipt.bit.platformer.objects.interfaces.GameObject;
 import ru.mipt.bit.platformer.objects.physical.Wall;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ class MoveDownTest {
                 );
 
         List<GameObjectAbt>   objects = new ArrayList<>(List.of( wall));
-        assertFalse(ghost.canMoveToDirection(Direction.DOWN, objects, new BorderLevel(7, 5)));
+        assertFalse(ghost.canMove(Direction.DOWN, objects, new BorderLevel(7, 5)));
     }
 
     @Test
@@ -45,6 +44,6 @@ class MoveDownTest {
                 );
 
         List<GameObjectAbt>   objects = new ArrayList<>(List.of( wall));
-        assertTrue(ghost.canMoveToDirection(Direction.DOWN, objects, new BorderLevel(7, 5)));
+        assertTrue(ghost.canMove(Direction.DOWN, objects, new BorderLevel(7, 5)));
     }
 }

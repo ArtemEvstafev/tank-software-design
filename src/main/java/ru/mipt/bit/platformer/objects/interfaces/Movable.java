@@ -22,9 +22,9 @@ public interface Movable extends GameObject {
 
     void changeDestinationCoordinates(GridPoint2 direction);
 
-    void move(float deltaTime);
+    void move(float deltaTime, Collection<? extends GameObjectAbt> obstacles, Level level);
 
-    void changeMovementState(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level);
+    void changeMovementState(Collection<? extends GameObjectAbt> obstacles, Level level);
 
-    boolean canMoveToDirection(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level);
+    boolean canMove(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level);
 }

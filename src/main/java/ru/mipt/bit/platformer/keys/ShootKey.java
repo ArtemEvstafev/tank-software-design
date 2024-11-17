@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class ShootKey implements Key{
+public class ShootKey implements Key {
 
     private final int[] keys;
     private final Collection<GameObjectAbt> allObjects;
@@ -33,12 +33,12 @@ public class ShootKey implements Key{
         for (GameObjectAbt object : allObjects) {
             if (object instanceof Shootable shootable) {
                 toAdd.add(shootable.shoot());
-
             }
         }
         for (InvisibleAmmunition ammunition : toAdd) {
-            if (!allObjects.contains(ammunition))
+            if (!allObjects.contains(ammunition)) {
                 allObjects.add(ammunition);
+            }
         }
     }
 }

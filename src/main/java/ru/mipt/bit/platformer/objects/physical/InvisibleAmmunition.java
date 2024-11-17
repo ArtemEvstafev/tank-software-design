@@ -8,6 +8,9 @@ import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 
 import java.util.Collection;
 
+import static com.badlogic.gdx.math.MathUtils.isEqual;
+import static ru.mipt.bit.platformer.util.GdxGameUtils.continueProgress;
+
 public class InvisibleAmmunition extends Ghost {
 
     protected final int damage;
@@ -16,5 +19,14 @@ public class InvisibleAmmunition extends Ghost {
         super(coordinates, direction.getRotation(), movementSpeed, movementProgress);
         this.direction = direction;
         this.damage = damage;
+    }
+
+    @Override
+    public void move(float deltaTime, Collection<? extends GameObjectAbt> obstacles, Level level) {
+        changeMovementState(obstacles, level);
+        setMovementProgress(continueProgress(movementProgress, deltaTime, movementSpeed));
+        if (isEqual(movementProgress, 1f)) {
+            setCoordinates(destinationCoordinates);
+        }
     }
 }

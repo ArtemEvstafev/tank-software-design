@@ -6,10 +6,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.keys.Direction;
+import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.GDX.AmmunitionGDX;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 import ru.mipt.bit.platformer.util.TileMovement;
+
+import java.util.Collection;
 
 import static ru.mipt.bit.platformer.util.GdxGameUtils.drawTextureRegionUnscaled;
 
@@ -87,9 +91,9 @@ public class Ammunition extends InvisibleAmmunition implements Drawable {
     }
 
     @Override
-    public void move(float deltaTime) {
+    public void move(float deltaTime, Collection<? extends GameObjectAbt> obstacles, Level level) {
         tileMovement.moveRectangleBetweenTileCenters(ammunitionGDX.getRectangle(), coordinates, destinationCoordinates, movementProgress);
-        super.move(deltaTime);
+        super.move(deltaTime, obstacles, level);
     }
 
 }

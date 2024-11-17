@@ -58,7 +58,8 @@ public class TankAI extends Tank implements AI {
     }
 
     @Override
-    public Direction getDirection() {
-        return generateDirection();
+    public void changeMovementState(Collection<? extends GameObjectAbt> obstacles, Level level) {
+        setDirection(generateDirection());
+        super.changeMovementState(obstacles, level);
     }
 }
