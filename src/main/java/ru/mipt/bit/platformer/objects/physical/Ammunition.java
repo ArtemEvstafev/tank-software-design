@@ -25,9 +25,10 @@ public class Ammunition extends InvisibleAmmunition implements Drawable {
             float movementSpeed,
             float movementProgress,
             Direction direction,
-            TileMovement tileMovement
+            TileMovement tileMovement,
+            int damage
     ) {
-        super(coordinates, movementSpeed, movementProgress, direction);
+        super(coordinates, movementSpeed, movementProgress, direction, damage);
         this.ammunitionGDX = new AmmunitionGDX(texture);
         this.tileMovement = tileMovement;
     }

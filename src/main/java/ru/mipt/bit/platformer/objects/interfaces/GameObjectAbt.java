@@ -33,12 +33,12 @@ public abstract class GameObjectAbt implements GameObject {
         this.rotation = rotation;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof GameObject)) return false;
-        GameObject gobject = (GameObject) o;
-        return Objects.equals(getCoordinates(), gobject.getCoordinates());
+        if (!(o instanceof GameObjectAbt objectAbt)) return false;
+        return Objects.equals(getCoordinates(), objectAbt.getCoordinates());
     }
 
     @Override

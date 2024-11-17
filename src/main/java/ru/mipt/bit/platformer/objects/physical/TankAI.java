@@ -56,4 +56,9 @@ public class TankAI extends Tank implements AI {
     public Direction generateDirection() {
         return Direction.values()[integerGenerator.generate(0, 3)];
     }
+
+    @Override
+    public Direction getDirection() {
+        return generateDirection();
+    }
 }

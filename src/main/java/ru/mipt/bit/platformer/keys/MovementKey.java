@@ -12,19 +12,16 @@ import java.util.Collection;
 
 public class MovementKey implements Key {
 
-    protected final Collection<? extends GameObjectAbt> obstacles;
-    private final Collection<? extends Movable> movables;
+    protected final Collection<? extends GameObjectAbt> objects;
     private final int[] keys;
     private final Direction direction;
     private final Level level;
 
-    public MovementKey(Collection<? extends GameObjectAbt> obstacles,
-                       Collection<Movable> movables,
+    public MovementKey(Collection<? extends GameObjectAbt> objects,
                        int[] keys,
                        Direction direction,
                        Level level) {
-        this.obstacles = obstacles;
-        this.movables = movables;
+        this.objects = objects;
         this.keys = keys;
         this.direction = direction;
         this.level = level;
@@ -37,9 +34,12 @@ public class MovementKey implements Key {
 
     @Override
     public void doAction() {
-        for (Movable movable : movables) {
-            if (!(movable instanceof AI || movable instanceof InvisibleAmmunition)) {
-                movable.changeMovementState(direction, obstacles, level);
+        for (GameObjectAbt objectAbt : objects) {
+            if (objectAbt instanceof Movable movable) {
+                if (!(movable instanceof AI || movable instanceof InvisibleAmmunition)) {
+                    movable.setDirection(direction);
+//                    movable.changeMovementState(direction, objects, level);
+                }
             }
         }
     }

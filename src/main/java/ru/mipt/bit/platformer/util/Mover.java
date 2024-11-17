@@ -21,19 +21,34 @@ public class Mover {
         this.tileMovement = tileMovement;
     }
 
-    public static void move(float deltaTime,
-                            Collection<? extends Movable> movables,
-                            Collection<? extends GameObjectAbt> obstacles,
-                            Level level) {
-        for (Movable movable : movables) {
-            if (movable instanceof AI ai) {
-                movable.changeMovementState(ai.generateDirection(), obstacles, level);
+    public static Collection<GameObjectAbt> move(float deltaTime,
+                                                 Collection<GameObjectAbt> obstacles,
+                                                 Level level,
+                                                 Collection<GameObjectAbt> deleteObjects) {
+
+        Collection<GameObjectAbt> obstaclesCopy = new HashSet<>(obstacles);
+        for (GameObjectAbt obstacle : obstacles) {
+            if (obstacle instanceof Movable movable) {
+//                if (movable instanceof AI ai) {
+//                    movable.changeMovementState(ai.generateDirection(), obstacles, level);
+//                }
+//                if (movable instanceof InvisibleAmmunition amo) {
+//                    if (amo.existCollisions(amo.getDirection(), obstacles) || amo.outOfBorders(amo.getDirection(), level)) {
+//                        deleteObjects.add(amo);
+//                        continue;
+//                    }
+//                    movable.changeMovementState(amo.getDirection(), obstacles, level);
+//                }
+                Direction direction = movable.getDirection();
+                if (!(direction == null)) {
+                    movable.setDirection(direction);
+                    movable.changeMovementState(direction, obstacles, level);
+                    movable.move(deltaTime);
+                }
             }
-            if (movable instanceof InvisibleAmmunition amo) {
-                movable.changeMovementState(amo.getDirection(), obstacles, level);
-            }
-            movable.move(deltaTime);
+            obstaclesCopy.add(obstacle);
         }
+        return obstaclesCopy;
     }
 
     public TileMovement getTileMovement() {

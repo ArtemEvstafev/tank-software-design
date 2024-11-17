@@ -1,23 +1,25 @@
 package ru.mipt.bit.platformer.keys;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Shootable;
+import ru.mipt.bit.platformer.objects.physical.Ammunition;
 import ru.mipt.bit.platformer.objects.physical.InvisibleAmmunition;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class ShootKey implements Key{
 
     private final int[] keys;
-    private final Collection<? extends Shootable> shootables;
-    Collection<GameObjectAbt> newObjects;
+    private final Collection<GameObjectAbt> allObjects;
 
-    public ShootKey(int[] keys, Collection<? extends Shootable> shootables, Collection<GameObjectAbt> newObjects) {
+    public ShootKey(int[] keys, Collection<GameObjectAbt> allObjects) {
         this.keys = keys;
-        this.shootables = shootables;
-        this.newObjects = newObjects;
+        this.allObjects = allObjects;
     }
 
     @Override
@@ -27,8 +29,16 @@ public class ShootKey implements Key{
 
     @Override
     public void doAction() {
-        for (Shootable shootable : shootables) {
-            newObjects.add(shootable.shoot());
+        Collection<InvisibleAmmunition> toAdd = new HashSet<>();
+        for (GameObjectAbt object : allObjects) {
+            if (object instanceof Shootable shootable) {
+                toAdd.add(shootable.shoot());
+
+            }
+        }
+        for (InvisibleAmmunition ammunition : toAdd) {
+            if (!allObjects.contains(ammunition))
+                allObjects.add(ammunition);
         }
     }
 }

@@ -7,6 +7,11 @@ import ru.mipt.bit.platformer.levels.Level;
 import java.util.Collection;
 
 public interface Movable extends GameObject {
+
+    Direction getDirection();
+
+    void setDirection(Direction direction);
+
     float getMovementSpeed();
 
     GridPoint2 getDestinationCoordinates();

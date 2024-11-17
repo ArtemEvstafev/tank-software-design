@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.objects.interfaces.*;
 import ru.mipt.bit.platformer.objects.physical.ShowHealthBarDecorator;
+import ru.mipt.bit.platformer.objects.physical.Tank;
 import ru.mipt.bit.platformer.util.*;
 import ru.mipt.bit.platformer.keys.*;
 import ru.mipt.bit.platformer.util.gameLoaders.GameLoader;
@@ -25,42 +26,15 @@ public class GameDesktopLauncher implements ApplicationListener {
     private Batch batch = null;
     private DrawableLevel level = null;
 
-    private       Collection<GameObjectAbt> allObjects = new HashSet<>();
-    private final Collection<Drawable>       drawables = new HashSet<>();
-    private final Collection<Movable>         movables = new HashSet<>();
-    private final Collection<Destroyable> destroyables = new HashSet<>();
-    private final Collection<Shootable>     shootables = new HashSet<>();
+    private Collection<GameObjectAbt> allObjects = new HashSet<>();
 
     @Override
     public void create() {
         GameLoader gameLoader = new RandomGeneratedGameLoader();
 //        GameLoader gameLoader = new FromFileGameLoader();
-        batch     = gameLoader.getBatch();
-        level     = gameLoader.getLevel();
+        batch      = gameLoader.getBatch();
+        level      = gameLoader.getLevel();
         allObjects = gameLoader.getObjects();
-        distributeObjects(allObjects);
-    }
-
-    private void distributeObjects(Collection<GameObjectAbt> newObjects) {
-        allObjects.addAll(newObjects);
-        for (GameObjectAbt gameObject : newObjects) {
-            if (gameObject instanceof Drawable) {
-                if (gameObject instanceof Destroyable) {
-                    drawables.add(new ShowHealthBarDecorator<>((Drawable & Destroyable) gameObject));
-                } else {
-                    drawables.add((Drawable) gameObject);
-                }
-            }
-            if (gameObject instanceof Movable) {
-                movables.add((Movable) gameObject);
-            }
-            if (gameObject instanceof Destroyable) {
-                destroyables.add((Destroyable) gameObject);
-            }
-            if (gameObject instanceof Shootable) {
-                shootables.add((Shootable) gameObject);
-            }
-        }
     }
 
     @Override
@@ -72,13 +46,11 @@ public class GameDesktopLauncher implements ApplicationListener {
         // get time passed since the last render
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        Collection<GameObjectAbt> newObjects = new HashSet<>();
         KeyPressHandler.handleKeyPress
                 (
                         new MovementKey
                                 (
                                         allObjects,
-                                        movables,
                                         new int[]{UP, W},
                                         Direction.UP,
                                         level
@@ -86,7 +58,6 @@ public class GameDesktopLauncher implements ApplicationListener {
                         new MovementKey
                                 (
                                         allObjects,
-                                        movables,
                                         new int[]{DOWN, S},
                                         Direction.DOWN,
                                         level
@@ -94,7 +65,6 @@ public class GameDesktopLauncher implements ApplicationListener {
                         new MovementKey
                                 (
                                         allObjects,
-                                        movables,
                                         new int[]{LEFT, A},
                                         Direction.LEFT,
                                         level
@@ -102,7 +72,6 @@ public class GameDesktopLauncher implements ApplicationListener {
                         new MovementKey
                                 (
                                         allObjects,
-                                        movables,
                                         new int[]{RIGHT, D},
                                         Direction.RIGHT,
                                         level
@@ -114,20 +83,26 @@ public class GameDesktopLauncher implements ApplicationListener {
                         new ShootKey
                                 (
                                         new int[]{SPACE},
-                                        shootables,
-                                        newObjects
+                                        allObjects
                                 )
                 );
-        distributeObjects(newObjects);
 
-        Mover.move(deltaTime, movables, allObjects, level);
+        Collection<GameObjectAbt> deleteObjects = new HashSet<>();
+        allObjects = Mover.move(deltaTime, allObjects, level, deleteObjects);
+
+        if (!deleteObjects.isEmpty()) {
+            System.out.println("try delete" + deleteObjects.size());
+            if(allObjects.removeAll(deleteObjects)) {
+                System.out.println("delete " + deleteObjects.size());
+            }
+        }
 
         // render each tile of the level
         level.render();
 
         batch.begin();
 
-        Drawer.draw(batch, drawables);
+        Drawer.draw(batch, allObjects);
 
         batch.end();
 
@@ -151,7 +126,7 @@ public class GameDesktopLauncher implements ApplicationListener {
     @Override
     public void dispose() {
         // dispose of all the native resources (classes which implement com.badlogic.gdx.utils.Disposable)
-        Drawer.dispose(drawables);
+        Drawer.dispose(allObjects);
         level.dispose();
         batch.dispose();
     }

@@ -107,9 +107,10 @@ public class Tank extends Ghost implements Drawable, Shootable {
         }
         return new Ammunition(new Texture("/home/artem/Repositories/tank-software-design/src/main/resources/images/3uzvaykb5cro_64.png"),
                 coordinates.cpy().add(directionToShoot.getDirection()),
-                1f,
+                1.f,
                 1f,
                 directionToShoot,
-                tileMovement);
+                tileMovement,
+                20);
     }
 }
