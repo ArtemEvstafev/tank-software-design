@@ -6,6 +6,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 import ru.mipt.bit.platformer.generators.SimpleIntegerGenerator;
+import ru.mipt.bit.platformer.objects.GDX.TankAIGDX;
+import ru.mipt.bit.platformer.objects.GDX.TankGDX;
+import ru.mipt.bit.platformer.objects.GDX.TreeGDX;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.physical.Tank;
 import ru.mipt.bit.platformer.objects.physical.TankAI;
@@ -34,7 +37,7 @@ public class FromFileDrawableLevel extends EmptyDrawableLevel {
 
         for (GridPoint2 coordinate : objectCoordinates.keySet()) {
             Character character = objectCoordinates.get(coordinate);
-            if (character == Tank.getDrawableCharacterStatic()) {
+            if (character == TankGDX.getDrawableCharacterStatic()) {
                 destination.add(new Tank
                         (
                                 new Texture("src/main/resources/images/tank_blue.png"),
@@ -44,14 +47,14 @@ public class FromFileDrawableLevel extends EmptyDrawableLevel {
                                 0,
                                 new TileMovement(getGroundLayer(), Interpolation.smooth)
                         ));
-            } else if (character == Tree.getDrawableCharacterStatic()) {
+            } else if (character == TreeGDX.getDrawableCharacterStatic()) {
                 destination.add(new Tree
                         (
                                 new Texture("src/main/resources/images/greenTree.png"),
                                 coordinate.set(coordinate.x, height - 1 - coordinate.y),
                                 groundLayer
                         ));
-            } else if (character == TankAI.getDrawableCharacterStatic()) {
+            } else if (character == TankAIGDX.getDrawableCharacterStatic()) {
                 destination.add(new TankAI
                         (
                                 new Texture("src/main/resources/images/tank_blue.png"),

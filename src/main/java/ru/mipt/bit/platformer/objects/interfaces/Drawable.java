@@ -7,21 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
 
 public interface Drawable extends GameObject {
-    Texture getTexture();
 
-    void setTexture(Texture texture);
-
-    TextureRegion getGraphics();
-
-    void setGraphics(TextureRegion graphics);
-
-    Rectangle getRectangle();
-
-    void setRectangle(Rectangle rectangle);
-
-    Character getDrawableCharacter();
-
-    void dispose();
+    ObjectGDXAbt getObjectGDX();
 
     void draw(Batch batch);
 

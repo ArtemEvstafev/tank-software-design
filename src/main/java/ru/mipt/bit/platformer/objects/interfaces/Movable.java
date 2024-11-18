@@ -8,19 +8,9 @@ import java.util.Collection;
 
 public interface Movable extends GameObject {
 
-    Direction getDirection();
-
-    void setDirection(Direction direction);
-
-    float getMovementSpeed();
-
     GridPoint2 getDestinationCoordinates();
 
-    float getMovementProgress();
-
-    void setMovementProgress(float movementProgress);
-
-    void changeDestinationCoordinates(GridPoint2 direction);
+    void setDirection(Direction direction);
 
     void move(float deltaTime, Collection<? extends GameObjectAbt> obstacles, Level level);
 

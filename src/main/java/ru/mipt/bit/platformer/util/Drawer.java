@@ -20,7 +20,7 @@ public class Drawer {
     public static void dispose(final Collection<? extends GameObjectAbt> allObjects){
         for (GameObjectAbt objectAbt : allObjects) {
             if (objectAbt instanceof Drawable drawable) {
-                drawable.dispose();
+                drawable.getObjectGDX().dispose();
             }
         }
     }

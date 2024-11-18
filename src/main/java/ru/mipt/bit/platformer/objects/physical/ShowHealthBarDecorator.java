@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import ru.mipt.bit.platformer.objects.interfaces.Destroyable;
-import ru.mipt.bit.platformer.objects.interfaces.Drawable;
-import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
+import ru.mipt.bit.platformer.objects.interfaces.*;
 import ru.mipt.bit.platformer.util.GdxGameUtils;
 import ru.mipt.bit.platformer.util.HealthBarSetting;
 
@@ -37,43 +35,8 @@ public class ShowHealthBarDecorator<T extends Drawable & Destroyable> extends Ga
     }
 
     @Override
-    public Texture getTexture() {
-        return wrapped.getTexture();
-    }
-
-    @Override
-    public void setTexture(Texture texture) {
-        wrapped.setTexture(texture);
-    }
-
-    @Override
-    public TextureRegion getGraphics() {
-        return wrapped.getGraphics();
-    }
-
-    @Override
-    public void setGraphics(TextureRegion graphics) {
-        wrapped.setGraphics(graphics);
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return wrapped.getRectangle();
-    }
-
-    @Override
-    public void setRectangle(Rectangle rectangle) {
-        wrapped.setRectangle(rectangle);
-    }
-
-    @Override
-    public Character getDrawableCharacter() {
-        return wrapped.getDrawableCharacter();
-    }
-
-    @Override
-    public void dispose() {
-        wrapped.dispose();
+    public ObjectGDXAbt getObjectGDX() {
+        return wrapped.getObjectGDX();
     }
 
     @Override
@@ -102,7 +65,7 @@ public class ShowHealthBarDecorator<T extends Drawable & Destroyable> extends Ga
     }
 
     private Rectangle createRectangle() {
-        var rectangle = new Rectangle(getRectangle());
+        var rectangle = new Rectangle(getObjectGDX().getRectangle());
         rectangle.y += 90;
         return rectangle;
     }

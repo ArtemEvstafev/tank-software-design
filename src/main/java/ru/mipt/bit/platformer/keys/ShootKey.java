@@ -6,6 +6,7 @@ import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Shootable;
 import ru.mipt.bit.platformer.objects.physical.Ammunition;
 import ru.mipt.bit.platformer.objects.physical.InvisibleAmmunition;
+import ru.mipt.bit.platformer.util.ObjectsUpdateListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,16 +30,11 @@ public class ShootKey implements Key {
 
     @Override
     public void doAction() {
-        Collection<InvisibleAmmunition> toAdd = new HashSet<>();
         for (GameObjectAbt object : allObjects) {
             if (object instanceof Shootable shootable) {
-                toAdd.add(shootable.shoot());
+                ObjectsUpdateListener.addObject(shootable.shoot());
             }
         }
-        for (InvisibleAmmunition ammunition : toAdd) {
-            if (!allObjects.contains(ammunition)) {
-                allObjects.add(ammunition);
-            }
-        }
+        ObjectsUpdateListener.updateObjects();
     }
 }

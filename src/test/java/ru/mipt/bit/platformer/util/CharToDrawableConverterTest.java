@@ -36,10 +36,9 @@ class CharToDrawableConverterTest {
 
     @Test
     void isCharExists() {
-        CharToDrawableConverter converter = new CharToDrawableConverter();
-        boolean res1 =  converter.isCharExists('A');
-        boolean res2 =  converter.isCharExists('X');
-        boolean res3 =  converter.isCharExists('T');
+        boolean res1 =  CharToDrawableConverter.isCharExists('A');
+        boolean res2 =  CharToDrawableConverter.isCharExists('X');
+        boolean res3 =  CharToDrawableConverter.isCharExists('T');
         assertTrue(res1 && res2 && res3);
     }
 }

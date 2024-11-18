@@ -1,14 +1,12 @@
 package ru.mipt.bit.platformer.objects.GDX;
 
 import com.badlogic.gdx.graphics.Texture;
-import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 import ru.mipt.bit.platformer.objects.interfaces.ObjectGDXAbt;
 
-public class TankGDX extends ObjectGDXAbt {
+public class TankAIGDX extends ObjectGDXAbt {
+    private static final Character drawableCharacter = 'A';
 
-    private static final Character drawableCharacter = 'X';
-
-    public TankGDX(Texture texture) {
+    public TankAIGDX(Texture texture) {
         super(texture);
     }
 

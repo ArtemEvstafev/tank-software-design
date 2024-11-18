@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 public interface ObjectGDX {
+
     Texture getTexture();
 
     void setTexture(Texture texture);
@@ -19,6 +20,4 @@ public interface ObjectGDX {
     void setRectangle(Rectangle rectangle);
 
     void dispose();
-
-    void draw(Batch batch);
 }

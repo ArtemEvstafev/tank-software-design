@@ -8,16 +8,13 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.objects.GDX.TreeGDX;
-import ru.mipt.bit.platformer.objects.interfaces.Drawable;
-import ru.mipt.bit.platformer.objects.interfaces.GameObject;
-import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
+import ru.mipt.bit.platformer.objects.interfaces.*;
 
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class Tree extends GameObjectAbt implements Drawable {
 
-    private final TreeGDX treeGDX;
-    private static final Character drawableCharacter = 'T';
+    private final ObjectGDXAbt treeGDX;
 
     public Tree
             (
@@ -35,47 +32,8 @@ public class Tree extends GameObjectAbt implements Drawable {
     }
 
     @Override
-    public Texture getTexture() {
-        return treeGDX.getTexture();
-    }
-
-    @Override
-    public void setTexture(Texture texture) {
-        treeGDX.setTexture(texture);
-    }
-
-    @Override
-    public TextureRegion getGraphics() {
-        return treeGDX.getGraphics();
-    }
-
-    @Override
-    public void setGraphics(TextureRegion graphics) {
-        treeGDX.setGraphics(graphics);
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return treeGDX.getRectangle();
-    }
-
-    @Override
-    public void setRectangle(Rectangle rectangle) {
-        treeGDX.setRectangle(rectangle);
-    }
-
-    @Override
-    public Character getDrawableCharacter() {
-        return drawableCharacter;
-    }
-
-    public static Character getDrawableCharacterStatic() {
-        return drawableCharacter;
-    }
-
-    @Override
-    public void dispose() {
-        treeGDX.dispose();
+    public ObjectGDXAbt getObjectGDX() {
+        return treeGDX;
     }
 
     @Override

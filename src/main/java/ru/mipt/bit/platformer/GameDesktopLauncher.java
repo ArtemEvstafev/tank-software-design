@@ -12,6 +12,7 @@ import ru.mipt.bit.platformer.objects.physical.ShowHealthBarDecorator;
 import ru.mipt.bit.platformer.objects.physical.Tank;
 import ru.mipt.bit.platformer.util.*;
 import ru.mipt.bit.platformer.keys.*;
+import ru.mipt.bit.platformer.util.gameLoaders.FromFileGameLoader;
 import ru.mipt.bit.platformer.util.gameLoaders.GameLoader;
 import ru.mipt.bit.platformer.util.gameLoaders.RandomGeneratedGameLoader;
 
@@ -25,6 +26,7 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     private Batch batch = null;
     private DrawableLevel level = null;
+    private ObjectsUpdateListener objectsUpdateListener = null;
 
     private Collection<GameObjectAbt> allObjects = new HashSet<>();
 
@@ -35,6 +37,7 @@ public class GameDesktopLauncher implements ApplicationListener {
         batch      = gameLoader.getBatch();
         level      = gameLoader.getLevel();
         allObjects = gameLoader.getObjects();
+        objectsUpdateListener = new ObjectsUpdateListener(allObjects);
     }
 
     @Override
@@ -83,15 +86,9 @@ public class GameDesktopLauncher implements ApplicationListener {
                                 )
                 );
 
-        Collection<GameObjectAbt> deleteObjects = new HashSet<>();
-        allObjects = Mover.move(deltaTime, allObjects, level, deleteObjects);
+        Mover.move(deltaTime, allObjects, level);
 
-        if (!deleteObjects.isEmpty()) {
-            System.out.println("try delete" + deleteObjects.size());
-            if(allObjects.removeAll(deleteObjects)) {
-                System.out.println("delete " + deleteObjects.size());
-            }
-        }
+        DeleteObjectsInspector.inspect(allObjects, level);
 
         // render each tile of the level
         level.render();

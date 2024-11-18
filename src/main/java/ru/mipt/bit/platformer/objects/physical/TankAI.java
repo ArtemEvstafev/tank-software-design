@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.generators.IntegerGenerator;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
+import ru.mipt.bit.platformer.objects.GDX.TankAIGDX;
 import ru.mipt.bit.platformer.objects.interfaces.AI;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
@@ -15,7 +16,6 @@ import java.util.Collection;
 
 public class TankAI extends Tank implements AI {
     private final IntegerGenerator integerGenerator;
-    private static final Character drawableCharacter = 'A';
 
     public TankAI(Texture texture,
                   GridPoint2 coordinates,
@@ -25,12 +25,13 @@ public class TankAI extends Tank implements AI {
                   TileMovement tileMovement,
                   IntegerGenerator integerGenerator) {
         super(texture, coordinates, movementSpeed, movementProgress, rotation, tileMovement);
+        this.tankGDX = new TankAIGDX(texture);
         this.integerGenerator = integerGenerator;
     }
 
     public TankAI(TankAI wrapped) {
         this(
-                wrapped.getTexture(),
+                wrapped.getObjectGDX().getTexture(),
                 wrapped.getCoordinates(),
                 wrapped.getMovementSpeed(),
                 wrapped.getMovementProgress(),
@@ -41,15 +42,6 @@ public class TankAI extends Tank implements AI {
 
     public IntegerGenerator getIntegerGenerator() {
         return integerGenerator;
-    }
-
-    @Override
-    public Character getDrawableCharacter() {
-        return drawableCharacter;
-    }
-
-    public static Character getDrawableCharacterStatic() {
-        return drawableCharacter;
     }
 
     @Override

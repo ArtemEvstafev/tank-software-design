@@ -8,9 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.GDX.TankGDX;
-import ru.mipt.bit.platformer.objects.interfaces.Drawable;
-import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
-import ru.mipt.bit.platformer.objects.interfaces.Shootable;
+import ru.mipt.bit.platformer.objects.interfaces.*;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 
@@ -20,9 +18,8 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class Tank extends Ghost implements Drawable, Shootable {
 
-    protected TankGDX tankGDX;
+    protected ObjectGDXAbt tankGDX;
     protected final TileMovement tileMovement;
-    private static final Character drawableCharacter = 'X';
 
     public Tank
             (
@@ -43,52 +40,13 @@ public class Tank extends Ghost implements Drawable, Shootable {
     }
 
     @Override
-    public Texture getTexture() {
-        return tankGDX.getTexture();
-    }
-
-    @Override
-    public void setTexture(Texture texture) {
-        tankGDX.setTexture(texture);
-    }
-
-    @Override
-    public TextureRegion getGraphics() {
-        return tankGDX.getGraphics();
-    }
-
-    @Override
-    public void setGraphics(TextureRegion graphics) {
-        tankGDX.setGraphics(graphics);
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return tankGDX.getRectangle();
-    }
-
-    @Override
-    public void setRectangle(Rectangle rectangle) {
-        tankGDX.setRectangle(rectangle);
-    }
-
-    @Override
-    public Character getDrawableCharacter() {
-        return drawableCharacter;
-    }
-
-    @Override
-    public void dispose() {
-        tankGDX.dispose();
+    public ObjectGDXAbt getObjectGDX() {
+        return tankGDX;
     }
 
     @Override
     public void draw(Batch batch) {
         drawTextureRegionUnscaled(batch, tankGDX.getGraphics(), tankGDX.getRectangle(), rotation);
-    }
-
-    public static Character getDrawableCharacterStatic() {
-        return drawableCharacter;
     }
 
     @Override

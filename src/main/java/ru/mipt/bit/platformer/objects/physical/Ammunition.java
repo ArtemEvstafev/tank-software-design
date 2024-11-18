@@ -11,6 +11,7 @@ import ru.mipt.bit.platformer.objects.GDX.AmmunitionGDX;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
+import ru.mipt.bit.platformer.objects.interfaces.ObjectGDXAbt;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 import java.util.Collection;
@@ -19,9 +20,8 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.drawTextureRegionUnscaled
 
 public class Ammunition extends InvisibleAmmunition implements Drawable {
 
-    private final AmmunitionGDX ammunitionGDX;
+    private final ObjectGDXAbt ammunitionGDX;
     protected final TileMovement tileMovement;
-    private static final Character drawableCharacter = '.';
 
     public Ammunition(
             Texture texture,
@@ -42,52 +42,13 @@ public class Ammunition extends InvisibleAmmunition implements Drawable {
     }
 
     @Override
-    public Texture getTexture() {
-        return ammunitionGDX.getTexture();
-    }
-
-    @Override
-    public void setTexture(Texture texture) {
-        ammunitionGDX.setTexture(texture);
-    }
-
-    @Override
-    public TextureRegion getGraphics() {
-        return ammunitionGDX.getGraphics();
-    }
-
-    @Override
-    public void setGraphics(TextureRegion graphics) {
-        ammunitionGDX.setGraphics(graphics);
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return ammunitionGDX.getRectangle();
-    }
-
-    @Override
-    public void setRectangle(Rectangle rectangle) {
-        ammunitionGDX.setRectangle(rectangle);
-    }
-
-    @Override
-    public Character getDrawableCharacter() {
-        return drawableCharacter;
-    }
-
-    @Override
-    public void dispose() {
-        ammunitionGDX.dispose();
+    public ObjectGDXAbt getObjectGDX() {
+        return ammunitionGDX;
     }
 
     @Override
     public void draw(Batch batch) {
         drawTextureRegionUnscaled(batch, ammunitionGDX.getGraphics(), ammunitionGDX.getRectangle(), rotation);
-    }
-
-    public static Character getDrawableCharacterStatic() {
-        return drawableCharacter;
     }
 
     @Override

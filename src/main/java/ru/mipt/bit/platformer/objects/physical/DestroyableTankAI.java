@@ -24,7 +24,7 @@ public class DestroyableTankAI extends TankAI implements Destroyable {
     public DestroyableTankAI(TankAI tankAI,
                              int health) {
         this(
-                tankAI.getTexture(),
+                tankAI.getObjectGDX().getTexture(),
                 tankAI.getCoordinates(),
                 tankAI.getMovementSpeed(),
                 tankAI.getMovementProgress(),

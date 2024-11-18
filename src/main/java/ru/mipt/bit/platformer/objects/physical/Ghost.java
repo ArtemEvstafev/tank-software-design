@@ -29,7 +29,6 @@ public class Ghost extends GameObjectAbt implements Movable {
         this(coordinates, 0f, movementSpeed, movementProgress);
     }
 
-    @Override
     public Direction getDirection() {
         return direction;
     }
@@ -39,27 +38,22 @@ public class Ghost extends GameObjectAbt implements Movable {
         this.direction = direction;
     }
 
-    @Override
     public float getMovementSpeed() {
         return movementSpeed;
     }
 
-    @Override
     public GridPoint2 getDestinationCoordinates() {
         return destinationCoordinates;
     }
 
-    @Override
     public float getMovementProgress() {
         return movementProgress;
     }
 
-    @Override
     public void setMovementProgress(float movementProgress) {
         this.movementProgress = movementProgress;
     }
 
-    @Override
     public void changeDestinationCoordinates(GridPoint2 direction) {
         destinationCoordinates.x += direction.x;
         destinationCoordinates.y += direction.y;

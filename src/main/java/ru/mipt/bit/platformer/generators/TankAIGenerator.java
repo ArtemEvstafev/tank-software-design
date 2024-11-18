@@ -56,7 +56,7 @@ public class TankAIGenerator implements ObjectGenerator<TankAI> {
     public TankAIGenerator(CoordinatesGenerator coordinatesGenerator, TankAI tankAI) {
         this(
                 coordinatesGenerator,
-                List.of(tankAI.getTexture()),
+                List.of(tankAI.getObjectGDX().getTexture()),
                 List.of(tankAI.getMovementSpeed()),
                 tankAI.getMovementProgress(),
                 List.of(tankAI.getRotation()),

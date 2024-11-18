@@ -29,4 +29,8 @@ public class InvisibleAmmunition extends Ghost {
             setCoordinates(destinationCoordinates);
         }
     }
+
+    public boolean anyObstacles(Collection<? extends GameObjectAbt> obstacles, Level level) {
+        return existCollisions(direction, obstacles) || outOfBorders(direction, level);
+    }
 }
