@@ -2,9 +2,7 @@ package ru.mipt.bit.platformer.objects.physical;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.GDX.TankGDX;
@@ -68,9 +66,9 @@ public class Tank extends Ghost implements Drawable, Shootable {
             directionToShoot = Direction.RIGHT;
         }
         return new Ammunition(new Texture("/home/artem/Repositories/tank-software-design/src/main/resources/images/3uzvaykb5cro_64.png"),
-                coordinates.cpy().add(directionToShoot.getDirection()),
-                0.04f,
-                1f,
+                coordinates.cpy().add(directionToShoot.getGridPoint()),
+                0.5f,
+                0f,
                 directionToShoot,
                 tileMovement,
                 20);

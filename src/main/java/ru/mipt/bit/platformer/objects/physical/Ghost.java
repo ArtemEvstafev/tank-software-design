@@ -5,6 +5,7 @@ import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
+import ru.mipt.bit.platformer.util.CollisionsObserver;
 
 import java.util.Collection;
 
@@ -29,6 +30,7 @@ public class Ghost extends GameObjectAbt implements Movable {
         this(coordinates, 0f, movementSpeed, movementProgress);
     }
 
+    @Override
     public Direction getDirection() {
         return direction;
     }
@@ -60,8 +62,8 @@ public class Ghost extends GameObjectAbt implements Movable {
     }
 
     @Override
-    public boolean canMove(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level) {
-        return isEqual(movementProgress, 1f) && !(existCollisions(direction, obstacles) || outOfBorders(direction, level));
+    public boolean canMove(Collection<? extends GameObjectAbt> obstacles, Level level) {
+        return isEqual(movementProgress, 1f) && !CollisionsObserver.existAnyCollisions(this, obstacles, level);
     }
 
     private void rotateIfPossible() {
@@ -74,8 +76,8 @@ public class Ghost extends GameObjectAbt implements Movable {
     public void changeMovementState(Collection<? extends GameObjectAbt> obstacles, Level level) {
         if (direction != null) {
             rotateIfPossible();
-            if (canMove(direction, obstacles, level)) {
-                changeDestinationCoordinates(direction.getDirection());
+            if (canMove(obstacles, level)) {
+                changeDestinationCoordinates(direction.getGridPoint());
                 setMovementProgress(0f);
             }
         }
@@ -90,28 +92,4 @@ public class Ghost extends GameObjectAbt implements Movable {
             this.direction = null;
         }
     }
-
-    public boolean outOfBorders(Direction direction, Level level) {
-        GridPoint2 destCoordinates = new GridPoint2(coordinates).add(direction.getDirection());
-        return (destCoordinates.x > level.getWidth() - 1 || destCoordinates.y > level.getHeight() - 1) ||
-                (destCoordinates.x < 0 || destCoordinates.y < 0);
-    }
-
-    public boolean existCollisions(Direction direction, Collection<? extends GameObjectAbt> obstacles) {
-        GridPoint2 directionGP = direction.getDirection();
-        return obstacles.stream().anyMatch(
-                (obstacle) ->
-                {
-                    if (!(this == obstacle)) {
-                        if (obstacle instanceof Movable movable) {
-
-                            return movable.getCoordinates().equals(coordinates.cpy().add(directionGP))
-                                    || movable.getDestinationCoordinates().equals(coordinates.cpy().add(directionGP));
-                        }
-                        return obstacle.getCoordinates().equals(coordinates.cpy().add(directionGP));
-                    }
-                    return false;
-                });
-    }
-
 }

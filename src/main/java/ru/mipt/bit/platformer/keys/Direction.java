@@ -15,7 +15,7 @@ public enum Direction{
         this.rotation  = rotation;
     }
 
-    public GridPoint2 getDirection() {
+    public GridPoint2 getGridPoint() {
         return direction;
     }
 

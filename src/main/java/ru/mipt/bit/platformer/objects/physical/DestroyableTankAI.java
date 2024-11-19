@@ -39,7 +39,6 @@ public class DestroyableTankAI extends TankAI implements Destroyable {
         this(tankAI, 100);
     }
 
-    @Override
     public void setHealth(int health) {
         this.health = health;
     }
@@ -47,6 +46,12 @@ public class DestroyableTankAI extends TankAI implements Destroyable {
     @Override
     public int getHealth() {
         return this.health;
+    }
+
+
+    @Override
+    public void getDamage(int damage) {
+        this.health = this.health - damage;
     }
 
     @Override

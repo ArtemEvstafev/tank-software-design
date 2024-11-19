@@ -9,12 +9,10 @@ import java.util.List;
 
 import static java.lang.Math.min;
 
-public class TankAIGenerator implements ObjectGenerator<TankAI> {
+public class TankAIGenerator extends ObjectGenerator<TankAI> {
     final protected List<Texture> textures;
-    final protected CoordinatesGenerator coordinatesGenerator;
     final protected List<Float> movementSpeeds;
     final protected float movementProgress;
-    final protected IntegerGenerator integerGenerator;
     final protected List<Float> rotations;
     final protected TileMovement tileMovement;
 
@@ -25,12 +23,10 @@ public class TankAIGenerator implements ObjectGenerator<TankAI> {
                            List<Float> rotations,
                            TileMovement tileMovement,
                            IntegerGenerator integerGenerator) {
-
+        super(coordinatesGenerator, integerGenerator);
         this.textures = textures;
-        this.coordinatesGenerator = coordinatesGenerator;
         this.movementSpeeds = movementSpeeds;
         this.movementProgress = movementProgress;
-        this.integerGenerator = integerGenerator;
         this.rotations = rotations;
         this.tileMovement = tileMovement;
     }
@@ -65,15 +61,6 @@ public class TankAIGenerator implements ObjectGenerator<TankAI> {
     }
 
     @Override
-    public Collection<? super TankAI> generate(int n, Collection<? super TankAI> destination) {
-        final int size = destination.size();
-        while (destination.size() < min(n + size, coordinatesGenerator.getHeight() * coordinatesGenerator.getWidth())) {
-            destination.add(generate());
-        }
-        return destination;
-    }
-
-    @Override
     public TankAI generate() {
         return new TankAI
                 (
@@ -85,9 +72,5 @@ public class TankAIGenerator implements ObjectGenerator<TankAI> {
                         tileMovement,
                         integerGenerator
                 );
-    }
-
-    int generateIndex(int size) {
-        return integerGenerator.generate(0, size - 1);
     }
 }

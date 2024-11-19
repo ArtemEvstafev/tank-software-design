@@ -8,30 +8,18 @@ import java.util.*;
 
 import static java.lang.Math.min;
 
-public class TreeGenerator implements ObjectGenerator<Tree> {
-    final private CoordinatesGenerator coordinatesGenerator;
-    final private IntegerGenerator integerGenerator;
+public class TreeGenerator extends ObjectGenerator<Tree> {
     final private List<String> textures;
     final private TiledMapTileLayer groundLayer;
 
     public TreeGenerator(CoordinatesGenerator coordinatesGenerator, IntegerGenerator integerGenerator, List<String> textures, TiledMapTileLayer groundLayer) {
-        this.coordinatesGenerator = coordinatesGenerator;
-        this.integerGenerator = integerGenerator;
+        super(coordinatesGenerator, integerGenerator);
         this.textures = textures;
         this.groundLayer = groundLayer;
     }
 
     public TreeGenerator(CoordinatesGenerator coordinatesGenerator, List<String> textures, TiledMapTileLayer groundLayer) {
         this(coordinatesGenerator, coordinatesGenerator.getIntegerGenerator(), textures, groundLayer);
-    }
-
-    @Override
-    public Collection<? super Tree> generate(int n, Collection<? super Tree> destination) {
-        final int size = destination.size();
-        while (destination.size() < min(n + size, coordinatesGenerator.getHeight() * coordinatesGenerator.getWidth())) {
-            destination.add(generate());
-        }
-        return destination;
     }
 
     @Override

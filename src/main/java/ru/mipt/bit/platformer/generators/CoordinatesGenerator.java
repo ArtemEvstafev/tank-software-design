@@ -6,7 +6,7 @@ import java.util.Collection;
 
 import static java.lang.Math.min;
 
-public class CoordinatesGenerator implements ObjectGenerator<GridPoint2> {
+public class CoordinatesGenerator {
 
     private final IntegerGenerator integerGenerator;
     private final int height, width;
@@ -17,16 +17,17 @@ public class CoordinatesGenerator implements ObjectGenerator<GridPoint2> {
         this.width = width;
     }
 
-    @Override
     public Collection<? super GridPoint2> generate(int n, Collection<? super GridPoint2> destination) {
         final int size = destination.size();
         while (destination.size() < min(n + size, width * height)) {
-            destination.add(generate());
+            var generate = generate();
+            if (!destination.contains(generate)) {
+                destination.add(generate);
+            }
         }
         return destination;
     }
 
-    @Override
     public GridPoint2 generate() {
         return new GridPoint2(integerGenerator.generate(0, width - 1), integerGenerator.generate(0, height - 1));
     }

@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Interpolation;
 import ru.mipt.bit.platformer.generators.*;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.levels.EmptyDrawableLevel;
-import ru.mipt.bit.platformer.objects.interfaces.*;
+import ru.mipt.bit.platformer.objects.interfaces.Destroyable;
+import ru.mipt.bit.platformer.objects.interfaces.Drawable;
+import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.physical.*;
 import ru.mipt.bit.platformer.util.Mover;
 import ru.mipt.bit.platformer.util.TileMovement;
@@ -41,7 +43,7 @@ public class RandomGeneratedGameLoader implements GameLoader {
                         level.getWidth()
                 );
 
-        final ObjectGenerator<TankAI> tankAIGenerator = new DestroyableTankAIGenerator(
+        final ObjectGenerator<DestroyableTankAI> tankAIGenerator = new ShowHealthBarObjectGeneratorDecorator<>(new DestroyableTankAIGenerator(
                 coordinatesGenerator,
                 List.of(new Texture("images/tank_blue.png")),
                 List.of(0.4f),
@@ -50,7 +52,7 @@ public class RandomGeneratedGameLoader implements GameLoader {
                 mover.getTileMovement(),
                 simpleIntegerGenerator,
                 List.of(10, 50, 90)
-        );
+        ));
 
         final ObjectGenerator<Tree> treeGenerator = new TreeGenerator(
                 coordinatesGenerator,
@@ -68,8 +70,8 @@ public class RandomGeneratedGameLoader implements GameLoader {
                         mover.getTileMovement()
                 );
 
-        final TankAI tankAI =
-                new DestroyableTankAI
+        final GameObjectAbt tankAI =
+                new ShowHealthBarDecorator<>(new DestroyableTankAI
                 (
                         new Texture("images/tank_blue.png"),
                         coordinatesGenerator.generate(),
@@ -79,7 +81,7 @@ public class RandomGeneratedGameLoader implements GameLoader {
                         mover.getTileMovement(),
                         simpleIntegerGenerator,
                         60
-                );
+                ));
 
         allObjects.add(tankPlayer);
         allObjects.add(tankAI);

@@ -35,6 +35,6 @@ public class ShootKey implements Key {
                 ObjectsUpdateListener.addObject(shootable.shoot());
             }
         }
-        ObjectsUpdateListener.updateObjects();
+        ObjectsUpdateListener.updateObjects(allObjects);
     }
 }

@@ -12,9 +12,11 @@ public interface Movable extends GameObject {
 
     void setDirection(Direction direction);
 
+    Direction getDirection();
+
     void move(float deltaTime, Collection<? extends GameObjectAbt> obstacles, Level level);
 
     void changeMovementState(Collection<? extends GameObjectAbt> obstacles, Level level);
 
-    boolean canMove(Direction direction, Collection<? extends GameObjectAbt> obstacles, Level level);
+    boolean canMove(Collection<? extends GameObjectAbt> obstacles, Level level);
 }

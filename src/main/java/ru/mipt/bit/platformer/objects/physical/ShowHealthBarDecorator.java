@@ -5,14 +5,49 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.keys.Direction;
+import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.*;
 import ru.mipt.bit.platformer.util.GdxGameUtils;
 import ru.mipt.bit.platformer.util.HealthBarSetting;
 
-public class ShowHealthBarDecorator<T extends Drawable & Destroyable> extends GameObjectAbt implements Drawable, Destroyable {
+import java.util.Collection;
+
+public class ShowHealthBarDecorator<T extends Drawable & Destroyable & Movable & Shootable & AI> extends GameObjectAbt implements Drawable, Destroyable, Movable, Shootable, AI {
 
     T wrapped;
+
+    @Override
+    public GridPoint2 getDestinationCoordinates() {
+        return wrapped.getDestinationCoordinates();
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        wrapped.setDirection(direction);
+    }
+
+    @Override
+    public Direction getDirection() {
+        return wrapped.getDirection();
+    }
+
+    @Override
+    public void move(float deltaTime, Collection<? extends GameObjectAbt> obstacles, Level level) {
+        wrapped.move(deltaTime, obstacles, level);
+    }
+
+    @Override
+    public void changeMovementState(Collection<? extends GameObjectAbt> obstacles, Level level) {
+        wrapped.changeMovementState(obstacles, level);
+    }
+
+    @Override
+    public boolean canMove(Collection<? extends GameObjectAbt> obstacles, Level level) {
+        return wrapped.canMove(obstacles, level);
+    }
 
     public ShowHealthBarDecorator(T wrapped) {
         super(wrapped.getCoordinates(), wrapped.getRotation());
@@ -20,13 +55,13 @@ public class ShowHealthBarDecorator<T extends Drawable & Destroyable> extends Ga
     }
 
     @Override
-    public void setHealth(int health) {
-        wrapped.setHealth(health);
+    public int getHealth() {
+        return wrapped.getHealth();
     }
 
     @Override
-    public int getHealth() {
-        return wrapped.getHealth();
+    public void getDamage(int damage) {
+        wrapped.getDamage(damage);
     }
 
     @Override
@@ -48,9 +83,9 @@ public class ShowHealthBarDecorator<T extends Drawable & Destroyable> extends Ga
     }
 
     private void renderHealthBar(Batch batch) {
-        var healthbarTexture = getHealthBarTexture(wrapped.getHealth());
+        var healthBarTexture = getHealthBarTexture((float) wrapped.getHealth() / 100);
         var rectangle = createRectangle();
-        GdxGameUtils.drawTextureRegionUnscaled(batch, healthbarTexture, rectangle, 0f);
+        GdxGameUtils.drawTextureRegionUnscaled(batch, healthBarTexture, rectangle, 0f);
     }
 
     private TextureRegion getHealthBarTexture(float relativeHealth) {
@@ -68,5 +103,15 @@ public class ShowHealthBarDecorator<T extends Drawable & Destroyable> extends Ga
         var rectangle = new Rectangle(getObjectGDX().getRectangle());
         rectangle.y += 90;
         return rectangle;
+    }
+
+    @Override
+    public InvisibleAmmunition shoot() {
+        return wrapped.shoot();
+    }
+
+    @Override
+    public Direction generateDirection() {
+        return wrapped.generateDirection();
     }
 }

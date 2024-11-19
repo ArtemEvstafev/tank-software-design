@@ -23,7 +23,7 @@ public class Mover {
                 movable.move(deltaTime, obstacles, level);
             }
         }
-        ObjectsUpdateListener.restruture();
+        ObjectsUpdateListener.restruture(obstacles);
     }
 
     public TileMovement getTileMovement() {

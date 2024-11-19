@@ -26,7 +26,6 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     private Batch batch = null;
     private DrawableLevel level = null;
-    private ObjectsUpdateListener objectsUpdateListener = null;
 
     private Collection<GameObjectAbt> allObjects = new HashSet<>();
 
@@ -37,7 +36,6 @@ public class GameDesktopLauncher implements ApplicationListener {
         batch      = gameLoader.getBatch();
         level      = gameLoader.getLevel();
         allObjects = gameLoader.getObjects();
-        objectsUpdateListener = new ObjectsUpdateListener(allObjects);
     }
 
     @Override
@@ -90,12 +88,14 @@ public class GameDesktopLauncher implements ApplicationListener {
 
         DeleteObjectsInspector.inspect(allObjects, level);
 
+
         // render each tile of the level
         level.render();
 
         batch.begin();
 
         Drawer.draw(batch, allObjects);
+
 
         batch.end();
 
