@@ -4,15 +4,12 @@ import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.Destroyable;
-import ru.mipt.bit.platformer.objects.interfaces.GameObject;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
-import ru.mipt.bit.platformer.objects.interfaces.Movable;
-import ru.mipt.bit.platformer.util.CollisionsObserver;
 
 import java.util.Collection;
-import java.util.Map;
 
 import static com.badlogic.gdx.math.MathUtils.isEqual;
+import static ru.mipt.bit.platformer.util.CollisionsObserver.collideWithObject;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.continueProgress;
 
 public class InvisibleAmmunition extends Ghost {
@@ -31,13 +28,12 @@ public class InvisibleAmmunition extends Ghost {
         setMovementProgress(continueProgress(movementProgress, deltaTime, movementSpeed));
         if (isEqual(movementProgress, 1f)) {
             setCoordinates(destinationCoordinates);
-            makeDamage(obstacles, level);
+            makeDamage(obstacles);
         }
     }
 
-    public void makeDamage(Collection<? extends GameObjectAbt> obstacles, Level level) {
-        final boolean existObjectsCollisions = CollisionsObserver.existObjectsCollisions((Movable) this, obstacles);
-        if (existObjectsCollisions && CollisionsObserver.collideWithObject(this, obstacles) instanceof Destroyable destroyable) {
+    public void makeDamage(Collection<? extends GameObjectAbt> obstacles) {
+        if (collideWithObject(this, obstacles) instanceof Destroyable destroyable) {
             destroyable.getDamage(this.damage);
         }
     }

@@ -1,7 +1,6 @@
 package ru.mipt.bit.platformer.objects.GDX;
 
 import com.badlogic.gdx.graphics.Texture;
-import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 import ru.mipt.bit.platformer.objects.interfaces.ObjectGDXAbt;
 
 public class TreeGDX extends ObjectGDXAbt {

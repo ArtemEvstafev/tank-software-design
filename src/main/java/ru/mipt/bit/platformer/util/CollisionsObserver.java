@@ -18,7 +18,7 @@ public class CollisionsObserver {
             var destCoordinates = object.getCoordinates().cpy().add(directionGP);
             if (obstacle instanceof Movable movable) {
                 return movable.getCoordinates().equals(destCoordinates)
-                        || movable.getDestinationCoordinates().equals(destCoordinates);
+                    || movable.getDestinationCoordinates().equals(destCoordinates);
             }
             return obstacle.getCoordinates().equals(destCoordinates);
         }

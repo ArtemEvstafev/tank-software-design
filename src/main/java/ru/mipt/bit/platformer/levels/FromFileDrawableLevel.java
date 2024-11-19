@@ -1,11 +1,8 @@
 package ru.mipt.bit.platformer.levels;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Interpolation;
-import ru.mipt.bit.platformer.generators.SimpleIntegerGenerator;
 import ru.mipt.bit.platformer.objects.GDX.TankAIGDX;
 import ru.mipt.bit.platformer.objects.GDX.TankGDX;
 import ru.mipt.bit.platformer.objects.GDX.TreeGDX;
@@ -14,9 +11,7 @@ import ru.mipt.bit.platformer.objects.physical.Tank;
 import ru.mipt.bit.platformer.objects.physical.TankAI;
 import ru.mipt.bit.platformer.objects.physical.Tree;
 import ru.mipt.bit.platformer.util.files.FileParser;
-import ru.mipt.bit.platformer.util.TileMovement;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -28,43 +23,23 @@ public class FromFileDrawableLevel extends EmptyDrawableLevel {
                                  String fileName,
                                  Collection<? super GameObjectAbt> destination) {
         super(level, batch);
-        Map<GridPoint2, Character> objectCoordinates;
-        try {
-            objectCoordinates = fileParser.parseCoordinatesFromFile(fileName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Map<GridPoint2, Character> objectCoordinates = fileParser.parseCoordinatesFromFile(fileName);
+        CreateObjectsFromCoordinates(destination, objectCoordinates);
+    }
 
+    private void CreateObjectsFromCoordinates(Collection<? super GameObjectAbt> destination, Map<GridPoint2, Character> objectCoordinates) {
         for (GridPoint2 coordinate : objectCoordinates.keySet()) {
             Character character = objectCoordinates.get(coordinate);
-            if (character == TankGDX.getDrawableCharacterStatic()) {
-                destination.add(new Tank
-                        (
-                                new Texture("src/main/resources/images/tank_blue.png"),
-                                coordinate.set(coordinate.x, height - 1 - coordinate.y),
-                                0.4f,
-                                1f,
-                                0,
-                                new TileMovement(getGroundLayer(), Interpolation.smooth)
-                        ));
+            GridPoint2 correctedCoordinate = new GridPoint2(coordinate.x, height - 1 - coordinate.y);
+
+                   if (character == TankGDX.getDrawableCharacterStatic()) {
+                destination.add(  Tank.getDefaultTankFromCoordinatesAndTMTLayer  (correctedCoordinate, getGroundLayer()));
+
             } else if (character == TreeGDX.getDrawableCharacterStatic()) {
-                destination.add(new Tree
-                        (
-                                new Texture("src/main/resources/images/greenTree.png"),
-                                coordinate.set(coordinate.x, height - 1 - coordinate.y),
-                                groundLayer
-                        ));
+                destination.add(  Tree.getDefaultTreeFromCoordinatesAndTMTLayer  (correctedCoordinate, getGroundLayer()));
+
             } else if (character == TankAIGDX.getDrawableCharacterStatic()) {
-                destination.add(new TankAI
-                        (
-                                new Texture("src/main/resources/images/tank_blue.png"),
-                                coordinate,
-                                0.4f,
-                                1f,
-                                0,
-                                new TileMovement(getGroundLayer(), Interpolation.smooth),
-                                new SimpleIntegerGenerator()
-                        ));
+                destination.add(TankAI.getDefaultTankAIFromCoordinatesAndTMTLayer(correctedCoordinate, getGroundLayer()));
             }
         }
     }

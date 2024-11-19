@@ -1,7 +1,6 @@
 package ru.mipt.bit.platformer.generators;
 
 import java.util.Collection;
-import java.util.function.Supplier;
 
 import static java.lang.Math.min;
 

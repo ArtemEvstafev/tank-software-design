@@ -39,7 +39,7 @@ public class ObjectsUpdateListener {
                 }
             }
             for (GameObjectAbt object: destination) {
-                if   (object instanceof InvisibleAmmunition && !tmp.contains(object)) {
+                if   (object instanceof InvisibleAmmunition) {
                     tmp.add(object);
                 }
             }

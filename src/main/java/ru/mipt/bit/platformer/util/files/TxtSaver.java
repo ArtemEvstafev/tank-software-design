@@ -3,8 +3,6 @@ package ru.mipt.bit.platformer.util.files;
 import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
-import ru.mipt.bit.platformer.objects.interfaces.GameObject;
-import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.physical.Tank;
 import ru.mipt.bit.platformer.objects.physical.TankAI;
 import ru.mipt.bit.platformer.objects.physical.Tree;
@@ -34,25 +32,19 @@ public class TxtSaver implements FileSaver {
     @Override
     public void saveToFile(String fileName) {
         initField(level);
-        drawObjects(level, drawables);
-        try {
-            saveFieldToFile(level, fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        drawObjectsInField(level, drawables);
+        saveFieldToFile(level, fileName);
     }
 
-    private void drawObjects(DrawableLevel level, Collection<? extends Drawable> drawables) {
-        GridPoint2 coordinates;
+    private void drawObjectsInField(DrawableLevel level, Collection<? extends Drawable> drawables) {
         for (Drawable drawable : drawables) {
-            coordinates = drawable.getCoordinates();
+            GridPoint2 coordinates = drawable.getCoordinates();
             int index = coordinates.x + level.getWidth() * coordinates.y;
-                   if (drawable instanceof TankAI tankAI) {
-                field.set(index, CharToDrawableConverter.getCharFromDrawable(tankAI));
-            } else if (drawable instanceof Tree tree) {
-                field.set(index, CharToDrawableConverter.getCharFromDrawable(  tree));
-            } else if (drawable instanceof Tank tank) {
-                field.set(index, CharToDrawableConverter.getCharFromDrawable(  tank));
+            switch (drawable) {
+                case TankAI tankAI -> field.set(index, CharToDrawableConverter.getCharFromDrawable(tankAI));
+                case Tree   tree   -> field.set(index, CharToDrawableConverter.getCharFromDrawable(tree  ));
+                case Tank   tank   -> field.set(index, CharToDrawableConverter.getCharFromDrawable(tank  ));
+                default -> {}
             }
         }
     }
@@ -63,13 +55,10 @@ public class TxtSaver implements FileSaver {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private void saveFieldToFile(DrawableLevel level, String fileName) throws IOException {
+    private void saveFieldToFile(DrawableLevel level, String fileName) {
         File file = new File(fileName);
 
-        File parentDir = file.getParentFile();
-        if (parentDir != null && !parentDir.exists()) {
-            parentDir.mkdirs();
-        }
+        createParentDir(file);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             for (int y = level.getHeight() - 1; y > -1; y--) {
@@ -82,6 +71,15 @@ public class TxtSaver implements FileSaver {
                     writer.newLine();
                 }
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void createParentDir(File file) {
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs();
         }
     }
 }

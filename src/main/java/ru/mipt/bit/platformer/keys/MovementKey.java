@@ -1,7 +1,6 @@
 package ru.mipt.bit.platformer.keys;
 
 import com.badlogic.gdx.Gdx;
-import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.AI;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;

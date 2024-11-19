@@ -6,8 +6,6 @@ import ru.mipt.bit.platformer.objects.physical.Tree;
 
 import java.util.*;
 
-import static java.lang.Math.min;
-
 public class TreeGenerator extends ObjectGenerator<Tree> {
     final private List<String> textures;
     final private TiledMapTileLayer groundLayer;

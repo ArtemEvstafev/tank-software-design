@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import ru.mipt.bit.platformer.objects.physical.TankAI;
 import ru.mipt.bit.platformer.util.TileMovement;
 
-import java.util.Collection;
 import java.util.List;
-
-import static java.lang.Math.min;
 
 public class TankAIGenerator extends ObjectGenerator<TankAI> {
     final protected List<Texture> textures;

@@ -21,7 +21,6 @@ public class FromFileGameLoader implements GameLoader {
 
     public FromFileGameLoader() {
         batch = new SpriteBatch();
-
         level = new FromFileDrawableLevel
                 (
                         new TmxMapLoader().load("level.tmx"),

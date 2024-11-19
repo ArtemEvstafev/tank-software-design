@@ -2,14 +2,9 @@ package ru.mipt.bit.platformer.generators;
 
 import com.badlogic.gdx.graphics.Texture;
 import ru.mipt.bit.platformer.objects.physical.DestroyableTankAI;
-import ru.mipt.bit.platformer.objects.physical.TankAI;
 import ru.mipt.bit.platformer.util.TileMovement;
 
-import java.util.Collection;
 import java.util.List;
-
-import static java.lang.Math.min;
-import static java.util.List.*;
 
 public class DestroyableTankAIGenerator extends ObjectGenerator<DestroyableTankAI> {
     private final List<Integer> healths;

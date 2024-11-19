@@ -2,7 +2,9 @@ package ru.mipt.bit.platformer.objects.physical;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Interpolation;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.GDX.TankGDX;
@@ -31,6 +33,18 @@ public class Tank extends Ghost implements Drawable, Shootable {
         super(coordinates, rotation, movementSpeed, movementProgress);
         this.tankGDX = new TankGDX(texture);
         this.tileMovement = tileMovement;
+    }
+
+    public static Tank getDefaultTankFromCoordinatesAndTMTLayer(GridPoint2 coordinate, TiledMapTileLayer TMTLayer) {
+        return new Tank
+                (
+                        new Texture("src/main/resources/images/tank_blue.png"),
+                        coordinate,
+                        0.4f,
+                        1f,
+                        0,
+                        new TileMovement(TMTLayer, Interpolation.smooth)
+                );
     }
 
     public TileMovement getTileMovement() {
@@ -67,8 +81,8 @@ public class Tank extends Ghost implements Drawable, Shootable {
         }
         return new Ammunition(new Texture("/home/artem/Repositories/tank-software-design/src/main/resources/images/3uzvaykb5cro_64.png"),
                 coordinates.cpy().add(directionToShoot.getGridPoint()),
-                0.5f,
-                0f,
+                0.05f,
+                1f,
                 directionToShoot,
                 tileMovement,
                 20);

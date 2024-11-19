@@ -2,15 +2,12 @@ package ru.mipt.bit.platformer.objects.physical;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.GDX.AmmunitionGDX;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
-import ru.mipt.bit.platformer.objects.interfaces.ObjectGDX;
 import ru.mipt.bit.platformer.objects.interfaces.ObjectGDXAbt;
 import ru.mipt.bit.platformer.util.TileMovement;
 

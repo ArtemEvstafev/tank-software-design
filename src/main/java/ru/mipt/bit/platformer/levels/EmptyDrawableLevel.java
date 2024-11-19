@@ -54,7 +54,7 @@ public class EmptyDrawableLevel implements DrawableLevel {
     }
 
     @Override
-    public void render() {
+    public void draw() {
         levelRenderer.render();
     }
 }

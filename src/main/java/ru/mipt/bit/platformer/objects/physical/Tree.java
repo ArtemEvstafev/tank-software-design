@@ -2,11 +2,8 @@ package ru.mipt.bit.platformer.objects.physical;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
-import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.objects.GDX.TreeGDX;
 import ru.mipt.bit.platformer.objects.interfaces.*;
 
@@ -25,6 +22,15 @@ public class Tree extends GameObjectAbt implements Drawable {
         super(coordinates, 0f);
         this.treeGDX = new TreeGDX(greenTreeTexture);
         this.placeOnLayer(groundLayer);
+    }
+
+    public static Tree getDefaultTreeFromCoordinatesAndTMTLayer(GridPoint2 coordinate, TiledMapTileLayer TMTLayer) {
+        return new Tree
+                (
+                        new Texture("src/main/resources/images/greenTree.png"),
+                        coordinate,
+                        TMTLayer
+                );
     }
 
     public void placeOnLayer(TiledMapTileLayer groundLayer) {

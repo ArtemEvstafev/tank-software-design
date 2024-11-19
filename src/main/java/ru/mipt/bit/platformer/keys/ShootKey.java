@@ -1,17 +1,12 @@
 package ru.mipt.bit.platformer.keys;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Shootable;
-import ru.mipt.bit.platformer.objects.physical.Ammunition;
-import ru.mipt.bit.platformer.objects.physical.InvisibleAmmunition;
 import ru.mipt.bit.platformer.util.ObjectsUpdateListener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 
 public class ShootKey implements Key {
 

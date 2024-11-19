@@ -1,11 +1,9 @@
 package ru.mipt.bit.platformer.keys;
 
 import com.badlogic.gdx.Gdx;
-import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.util.HealthBarSetting;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 public class HealthToggleKey implements Key {
 

@@ -5,11 +5,11 @@ import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
-import ru.mipt.bit.platformer.util.CollisionsObserver;
 
 import java.util.Collection;
 
 import static com.badlogic.gdx.math.MathUtils.isEqual;
+import static ru.mipt.bit.platformer.util.CollisionsObserver.existAnyCollisions;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.continueProgress;
 
 public class Ghost extends GameObjectAbt implements Movable {
@@ -63,7 +63,7 @@ public class Ghost extends GameObjectAbt implements Movable {
 
     @Override
     public boolean canMove(Collection<? extends GameObjectAbt> obstacles, Level level) {
-        return isEqual(movementProgress, 1f) && !CollisionsObserver.existAnyCollisions(this, obstacles, level);
+        return isEqual(movementProgress, 1f) && !existAnyCollisions(this, obstacles, level);
     }
 
     private void rotateIfPossible() {
