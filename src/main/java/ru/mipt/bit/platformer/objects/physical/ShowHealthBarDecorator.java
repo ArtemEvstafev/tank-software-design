@@ -1,0 +1,117 @@
+package ru.mipt.bit.platformer.objects.physical;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.keys.Direction;
+import ru.mipt.bit.platformer.levels.Level;
+import ru.mipt.bit.platformer.objects.interfaces.*;
+import ru.mipt.bit.platformer.util.GdxGameUtils;
+import ru.mipt.bit.platformer.util.HealthBarSetting;
+
+import java.util.Collection;
+
+public class ShowHealthBarDecorator<T extends Drawable & Destroyable & Movable & Shootable & AI> extends GameObjectAbt implements Drawable, Destroyable, Movable, Shootable, AI {
+
+    T wrapped;
+
+    @Override
+    public GridPoint2 getDestinationCoordinates() {
+        return wrapped.getDestinationCoordinates();
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        wrapped.setDirection(direction);
+    }
+
+    @Override
+    public Direction getDirection() {
+        return wrapped.getDirection();
+    }
+
+    @Override
+    public void move(float deltaTime, Collection<? extends GameObjectAbt> obstacles, Level level) {
+        wrapped.move(deltaTime, obstacles, level);
+    }
+
+    @Override
+    public void changeMovementState(Collection<? extends GameObjectAbt> obstacles, Level level) {
+        wrapped.changeMovementState(obstacles, level);
+    }
+
+    @Override
+    public boolean canMove(Collection<? extends GameObjectAbt> obstacles, Level level) {
+        return wrapped.canMove(obstacles, level);
+    }
+
+    public ShowHealthBarDecorator(T wrapped) {
+        super(wrapped.getCoordinates(), wrapped.getRotation());
+        this.wrapped = wrapped;
+    }
+
+    @Override
+    public int getHealth() {
+        return wrapped.getHealth();
+    }
+
+    @Override
+    public void getDamage(int damage) {
+        wrapped.getDamage(damage);
+    }
+
+    @Override
+    public void destroy() {
+        wrapped.destroy();
+    }
+
+    @Override
+    public ObjectGDXAbt getObjectGDX() {
+        return wrapped.getObjectGDX();
+    }
+
+    @Override
+    public void draw(Batch batch) {
+        wrapped.draw(batch);
+        if (HealthBarSetting.showHealthBar) {
+            renderHealthBar(batch);
+        }
+    }
+
+    private void renderHealthBar(Batch batch) {
+        var healthBarTexture = getHealthBarTexture((float) wrapped.getHealth() / 100);
+        var rectangle = createRectangle();
+        GdxGameUtils.drawTextureRegionUnscaled(batch, healthBarTexture, rectangle, 0f);
+    }
+
+    private TextureRegion getHealthBarTexture(float relativeHealth) {
+        var pixmap = new Pixmap(90, 20, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fillRectangle(0, 0, 90, 20);
+        pixmap.setColor(Color.GREEN);
+        pixmap.fillRectangle(0, 0, (int) (90 * relativeHealth), 20);
+        var texture = new Texture(pixmap);
+        pixmap.dispose();
+        return new TextureRegion(texture);
+    }
+
+    private Rectangle createRectangle() {
+        var rectangle = new Rectangle(getObjectGDX().getRectangle());
+        rectangle.y += 90;
+        return rectangle;
+    }
+
+    @Override
+    public InvisibleAmmunition shoot() {
+        return wrapped.shoot();
+    }
+
+    @Override
+    public Direction generateDirection() {
+        return wrapped.generateDirection();
+    }
+}

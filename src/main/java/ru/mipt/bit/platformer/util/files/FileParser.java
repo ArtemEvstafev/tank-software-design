@@ -1,0 +1,9 @@
+package ru.mipt.bit.platformer.util.files;
+
+import com.badlogic.gdx.math.GridPoint2;
+
+import java.util.Map;
+
+public interface FileParser {
+    Map<GridPoint2, Character> parseCoordinatesFromFile(String filePath);
+}
