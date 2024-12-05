@@ -79,7 +79,7 @@ public class Tank extends Ghost implements Drawable, Shootable {
         } else {
             directionToShoot = Direction.RIGHT;
         }
-        return new Ammunition(new Texture("/home/artem/Repositories/tank-software-design/src/main/resources/images/3uzvaykb5cro_64.png"),
+        return new Ammunition(new Texture("src/main/resources/images/bullet.png"),
                 coordinates.cpy().add(directionToShoot.getGridPoint()),
                 0.05f,
                 1f,

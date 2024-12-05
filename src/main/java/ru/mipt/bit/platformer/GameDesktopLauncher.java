@@ -1,81 +1,29 @@
 package ru.mipt.bit.platformer;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.graphics.g2d.Batch;
 
-import ru.mipt.bit.platformer.levels.DrawableLevel;
-import ru.mipt.bit.platformer.objects.interfaces.*;
-import ru.mipt.bit.platformer.util.*;
-import ru.mipt.bit.platformer.keys.*;
-import ru.mipt.bit.platformer.util.gameLoaders.FromFileGameLoader;
-import ru.mipt.bit.platformer.util.gameLoaders.GameLoader;
-import ru.mipt.bit.platformer.util.gameLoaders.RandomGeneratedGameLoader;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
-
-import java.util.*;
-
-import static com.badlogic.gdx.Input.Keys.*;
-
+@Component
 public class GameDesktopLauncher implements ApplicationListener {
 
-    private Batch batch = null;
-    private DrawableLevel level = null;
-    private Collection<GameObjectAbt> allObjects = new HashSet<>();
-    private Key[] keys = null;
+    private Game game;
 
     @Override
     public void create() {
-        GameLoader gameLoader = new RandomGeneratedGameLoader();
-//        GameLoader gameLoader = new FromFileGameLoader();
-        batch      = gameLoader.getBatch();
-        level      = gameLoader.getLevel();
-        allObjects = gameLoader.getObjects();
-        keys = new Key[]{
-                new MovementKey
-                        (
-                                allObjects,
-                                new int[]{UP, W},
-                                Direction.UP
-                        ),
-                new MovementKey
-                        (
-                                allObjects,
-                                new int[]{DOWN, S},
-                                Direction.DOWN
-                        ),
-                new MovementKey
-                        (
-                                allObjects,
-                                new int[]{LEFT, A},
-                                Direction.LEFT
-                        ),
-                new MovementKey
-                        (
-                                allObjects,
-                                new int[]{RIGHT, D},
-                                Direction.RIGHT
-                        ),
-                new HealthToggleKey
-                        (
-                                new int[]{L}
-                        ),
-                new ShootKey
-                        (
-                                new int[]{SPACE},
-                                allObjects
-                        )
-        };
+
+        ApplicationContext context = new AnnotationConfigApplicationContext(GameConfiguration.class);
+        this.game = (Game) context.getBean("game");
+        game.startGame();
     }
 
     @Override
     public void render() {
-        KeyPressHandler.handleKeyPress(keys);
-        Mover.move(Gdx.graphics.getDeltaTime(), allObjects, level);
-        Drawer.drawAll(level, batch, allObjects);
-        Deleter.delete(allObjects, level);
+        game.render();
     }
 
     @Override
@@ -96,7 +44,7 @@ public class GameDesktopLauncher implements ApplicationListener {
     @Override
     public void dispose() {
         // dispose of all the native resources (classes which implement com.badlogic.gdx.utils.Disposable)
-        Drawer.disposeAll(allObjects, level, batch);
+        game.dispose();
     }
 
     public static void main(String[] args) {
