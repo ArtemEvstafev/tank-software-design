@@ -15,10 +15,8 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     @Override
     public void create() {
-
         ApplicationContext context = new AnnotationConfigApplicationContext(GameConfiguration.class);
         this.game = (Game) context.getBean("game");
-        game.startGame();
     }
 
     @Override

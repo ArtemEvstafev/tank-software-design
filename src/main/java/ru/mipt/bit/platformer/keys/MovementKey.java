@@ -1,13 +1,14 @@
 package ru.mipt.bit.platformer.keys;
 
 import com.badlogic.gdx.Gdx;
+import ru.mipt.bit.platformer.commands.Command;
+import ru.mipt.bit.platformer.commands.MoveCommand;
 import ru.mipt.bit.platformer.objects.interfaces.AI;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Movable;
 import ru.mipt.bit.platformer.objects.physical.InvisibleAmmunition;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 public class MovementKey implements Key {
 
@@ -29,14 +30,16 @@ public class MovementKey implements Key {
     }
 
     @Override
-    public void doAction() {
+    public Queue<Command> makeCommands() {
+        Queue<Command> commands = new ArrayDeque<>();
         for (GameObjectAbt objectAbt : objects) {
             if (objectAbt instanceof Movable movable) {
                 if (!(movable instanceof AI || movable instanceof InvisibleAmmunition)) {
-                    movable.setDirection(direction);
+                    commands.offer(new MoveCommand(movable, direction));
                 }
             }
         }
+        return commands;
     }
 }
 

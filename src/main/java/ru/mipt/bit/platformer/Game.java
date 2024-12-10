@@ -4,15 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.mipt.bit.platformer.commands.Command;
 import ru.mipt.bit.platformer.keys.*;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
-import ru.mipt.bit.platformer.util.Deleter;
-import ru.mipt.bit.platformer.util.Drawer;
-import ru.mipt.bit.platformer.util.KeyPressHandler;
-import ru.mipt.bit.platformer.util.Mover;
+import ru.mipt.bit.platformer.util.*;
+import ru.mipt.bit.platformer.util.commandaManagers.CommandsCreator;
+import ru.mipt.bit.platformer.util.commandaManagers.CommandsExecuter;
+import ru.mipt.bit.platformer.util.commandaManagers.CommandsGenerator;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Queue;
 
 @Component
 public class Game {
@@ -21,6 +24,7 @@ public class Game {
     private final DrawableLevel level;
     private final Collection<GameObjectAbt> allObjects;
     private final Key[] keys;
+    private Queue<Command> commands;
 
     @Autowired
     public Game(Batch batch, DrawableLevel level, Collection<GameObjectAbt> allObjects, Key[] keys) {
@@ -31,17 +35,14 @@ public class Game {
     }
 
     public void render() {
-        KeyPressHandler.handleKeyPress(keys);
+        commands = CommandsCreator.createCommands(new KeyPressHandler(keys));
+        CommandsExecuter.executeCommands(commands);
         Mover.move(Gdx.graphics.getDeltaTime(), allObjects, level);
-        Drawer.drawAll(level, batch, allObjects);
+        Drawer.draw(level, batch, allObjects);
         Deleter.delete(allObjects, level);
     }
 
     public void dispose() {
         Drawer.disposeAll(allObjects, level, batch);
-    }
-
-    public void startGame() {
-        System.out.println("Game started!");
     }
 }

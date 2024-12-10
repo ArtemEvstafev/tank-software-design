@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.objects.physical;
+package ru.mipt.bit.platformer.objects.decorators;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.keys.Direction;
 import ru.mipt.bit.platformer.levels.Level;
 import ru.mipt.bit.platformer.objects.interfaces.*;
+import ru.mipt.bit.platformer.objects.physical.InvisibleAmmunition;
 import ru.mipt.bit.platformer.util.GdxGameUtils;
 import ru.mipt.bit.platformer.util.HealthBarSetting;
 

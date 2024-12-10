@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Interpolation;
 import ru.mipt.bit.platformer.generators.*;
 import ru.mipt.bit.platformer.levels.DrawableLevel;
 import ru.mipt.bit.platformer.levels.EmptyDrawableLevel;
+import ru.mipt.bit.platformer.objects.decorators.ShowHealthBarDecorator;
 import ru.mipt.bit.platformer.objects.interfaces.Drawable;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.physical.*;

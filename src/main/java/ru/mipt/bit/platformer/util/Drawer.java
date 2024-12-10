@@ -24,7 +24,7 @@ public class Drawer {
         level.draw();
     }
 
-    public static void drawAll(DrawableLevel level, Batch batch, final Collection<? extends GameObjectAbt> allObjects) {
+    public static void draw(DrawableLevel level, Batch batch, final Collection<? extends GameObjectAbt> allObjects) {
         // clear the screen
         Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
         Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);

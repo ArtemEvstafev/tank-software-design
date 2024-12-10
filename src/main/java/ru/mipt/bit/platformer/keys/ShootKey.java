@@ -1,12 +1,13 @@
 package ru.mipt.bit.platformer.keys;
 
 import com.badlogic.gdx.Gdx;
+import ru.mipt.bit.platformer.commands.Command;
+import ru.mipt.bit.platformer.commands.ShootCommand;
 import ru.mipt.bit.platformer.objects.interfaces.GameObjectAbt;
 import ru.mipt.bit.platformer.objects.interfaces.Shootable;
 import ru.mipt.bit.platformer.util.ObjectsUpdateListener;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 public class ShootKey implements Key {
 
@@ -24,12 +25,14 @@ public class ShootKey implements Key {
     }
 
     @Override
-    public void doAction() {
+    public Queue<Command> makeCommands() {
+        Queue<Command> commands = new ArrayDeque<>();
         for (GameObjectAbt object : allObjects) {
             if (object instanceof Shootable shootable) {
-                ObjectsUpdateListener.addObject(shootable.shoot());
+                commands.offer(new ShootCommand(shootable));
             }
         }
         ObjectsUpdateListener.updateObjects(allObjects);
+        return commands;
     }
 }

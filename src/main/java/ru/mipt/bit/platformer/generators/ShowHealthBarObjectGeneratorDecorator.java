@@ -1,7 +1,7 @@
 package ru.mipt.bit.platformer.generators;
 
 import ru.mipt.bit.platformer.objects.interfaces.*;
-import ru.mipt.bit.platformer.objects.physical.ShowHealthBarDecorator;
+import ru.mipt.bit.platformer.objects.decorators.ShowHealthBarDecorator;
 
 public class ShowHealthBarObjectGeneratorDecorator<T extends Drawable & Destroyable & Movable & Shootable & AI> extends ObjectGenerator<T> {
 
