@@ -26,8 +26,8 @@ public class ShowHealthBarDecorator<T extends Drawable & Destroyable & Movable &
     }
 
     @Override
-    public void setDirection(Direction direction) {
-        wrapped.setDirection(direction);
+    public void tryMoveToDirection(Direction direction) {
+        wrapped.tryMoveToDirection(direction);
     }
 
     @Override

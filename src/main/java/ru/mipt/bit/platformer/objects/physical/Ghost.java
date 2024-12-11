@@ -36,7 +36,7 @@ public class Ghost extends GameObjectAbt implements Movable {
     }
 
     @Override
-    public void setDirection(Direction direction) {
+    public void tryMoveToDirection(Direction direction) {
         this.direction = direction;
     }
 

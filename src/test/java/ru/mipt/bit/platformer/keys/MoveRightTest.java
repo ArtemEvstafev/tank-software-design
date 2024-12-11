@@ -25,7 +25,7 @@ class MoveRightTest {
                         1f,
                         1f
                 );
-        ghost.setDirection(Direction.RIGHT);
+        ghost.tryMoveToDirection(Direction.RIGHT);
         List<GameObjectAbt>   objects = new ArrayList<>(List.of( wall));
         assertFalse(ghost.canMove(objects, new BorderLevel(7, 5)));
     }
@@ -42,7 +42,7 @@ class MoveRightTest {
                         1f,
                         1f
                 );
-        ghost.setDirection(Direction.RIGHT);
+        ghost.tryMoveToDirection(Direction.RIGHT);
         List<GameObjectAbt>   objects = new ArrayList<>(List.of( wall));
         assertTrue(ghost.canMove(objects, new BorderLevel(7, 5)));
     }

@@ -15,6 +15,6 @@ public class MoveCommand implements Command {
 
     @Override
     public void execute() {
-        movable.setDirection(direction);
+        movable.tryMoveToDirection(direction);
     }
 }

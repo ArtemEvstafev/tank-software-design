@@ -10,7 +10,7 @@ public interface Movable extends GameObject {
 
     GridPoint2 getDestinationCoordinates();
 
-    void setDirection(Direction direction);
+    void tryMoveToDirection(Direction direction);
 
     Direction getDirection();
 
